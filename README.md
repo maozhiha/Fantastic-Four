@@ -10,6 +10,8 @@ https://utoronto-my.sharepoint.com/:i:/r/personal/chelseack_wong_mail_utoronto_c
 screenshot of example output of running your Java code:
 https://utoronto-my.sharepoint.com/:i:/r/personal/chelseack_wong_mail_utoronto_ca/Documents/207/example%20output.png?csf=1&web=1&e=xOP6jB
 
+![screenshot image](screenshot of using a tool to try out the API.png)
+
 ### Example output:
 <html lang="en">
 <head>
