@@ -6,7 +6,9 @@ https://www.themealdb.com/api.php
 
 ![screenshot of using a tool to try out the API]([https://github.com/jewwoo/Three-Musketeers/blob/main/example%20output.png](https://github.com/jewwoo/Three-Musketeers/blob/main/screenshot%20of%20using%20a%20tool%20to%20try%20out%20the%20API.png))
 
+
 ![screenshot of example output of running your Java code](https://github.com/jewwoo/Three-Musketeers/blob/main/example%20output.png)
+
 
 ![screenshot of using a tool to try out the API.png](https://github.com/jewwoo/Three-Musketeers/blob/main/screenshot%20of%20using%20a%20tool%20to%20try%20out%20the%20API.png))
 
