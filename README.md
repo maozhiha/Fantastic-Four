@@ -5,7 +5,7 @@ A collection of recipes organized by various categories such as country, alphabe
 https://www.themealdb.com/api.php
 
 screenshot of using a tool to try out the API:
-https://utoronto-my.sharepoint.com/:i:/r/personal/chelseack_wong_mail_utoronto_ca/Documents/207/screenshot%20of%20using%20a%20tool%20to%20try%20out%20the%20API.png?csf=1&web=1&e=HXgRR2
+![]https://github.com/jewwoo/Three-Musketeers/blob/main/example%20output.png
 
 screenshot of example output of running your Java code:
 https://utoronto-my.sharepoint.com/:i:/r/personal/chelseack_wong_mail_utoronto_ca/Documents/207/example%20output.png?csf=1&web=1&e=xOP6jB
