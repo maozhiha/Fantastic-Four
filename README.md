@@ -2,6 +2,7 @@
 
 
 Recipe organizer
+
 A collection of recipes organized by various categories such as country, alphabet, ingredients, allergies, and dietary preferences like vegan, pescatarian, and vegetarian. This categorization allows users to conveniently search for recipes based on their specific requirements and preferences. By organizing recipes in this manner, users can easily explore new recipes and enhance their culinary skills. Such catalogs provide a comprehensive resource for individuals looking to try out new dishes or find inspiration for their cooking endeavors. They can be accessed through various mediums such as websites, cookbooks, or digital applications.
 https://www.themealdb.com/api.php
 
