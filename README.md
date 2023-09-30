@@ -1,4 +1,4 @@
-Recipe organizer
+## Recipe organizer
 
 A collection of recipes organized by various categories such as country, alphabet, ingredients, allergies, and dietary preferences like vegan, pescatarian, and vegetarian. This categorization allows users to conveniently search for recipes based on their specific requirements and preferences. By organizing recipes in this manner, users can easily explore new recipes and enhance their culinary skills. Such catalogs provide a comprehensive resource for individuals looking to try out new dishes or find inspiration for their cooking endeavors. They can be accessed through various mediums such as websites, cookbooks, or digital applications.
 
@@ -10,7 +10,7 @@ https://utoronto-my.sharepoint.com/:i:/r/personal/chelseack_wong_mail_utoronto_c
 screenshot of example output of running your Java code:
 https://utoronto-my.sharepoint.com/:i:/r/personal/chelseack_wong_mail_utoronto_ca/Documents/207/example%20output.png?csf=1&web=1&e=xOP6jB
 
-Example output:
+### Example output:
 <html lang="en">
 <head>
     <meta charset="utf-8">
