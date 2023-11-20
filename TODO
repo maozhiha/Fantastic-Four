@@ -1,7 +1,11 @@
-Timeline
+##Timeline
 
-Nov 20: search, save, filter, user account, extra features
+#Nov 20: search, save, filter, user account, extra features
 
-Nov 27: clean architeture, solid
+#Nov 27: clean architeture, solid
+- recipe label display (pagination- 10 recipes at a time and ask the user to see more)
+- recipe save
+- recipe search in "saved recipes"
+- divide search, filter, save into separate use cases?
 
-Dec 4: gui
+#Dec 4: gui
