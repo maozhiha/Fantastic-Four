@@ -1,12 +1,11 @@
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.sql.SQLOutput;
-import java.util.Scanner;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Scanner;
 
 public class RecipeFinder {
     private static final String APP_ID = "30ccd393";
@@ -37,57 +36,78 @@ public class RecipeFinder {
         boolean success = false;
         int index = 0;
         while (!success) {
-            System.out.println("enter keyword(s).  Use or/and if multiple keywords");
+            System.out.println("enter keyword(s).  Use 'and' if multiple keywords.");
             System.out.print("\t>> ");
             String keyWord = scanner.nextLine();
             keyWord = keyWord.replaceAll("(?i) and ", "+");
             keyWord = keyWord.replaceAll("(?i) or ", ",");
 
             System.out.println("Enter diet labels (comma-separated):");
-            System.out.println("\t>> ");
+            System.out.println("      Check valid inputs from https://developer.edamam.com/edamam-docs-recipe-api");
+            System.out.print("\t>> ");
             String dietLabels = scanner.nextLine();
 
             System.out.println("Enter health labels (comma-separated):");
-            System.out.println("\t>> ");
+            System.out.println("      Check valid inputs from https://developer.edamam.com/edamam-docs-recipe-api");
+            System.out.print("\t>> ");
             String healthLabels = scanner.nextLine();
 
             System.out.println("Enter meal type:");
-            System.out.println("\t>> ");
+            System.out.println("      Check valid inputs from https://developer.edamam.com/edamam-docs-recipe-api");
+            System.out.print("\t>> ");
             String mealType = scanner.nextLine();
 
             System.out.println("Enter dish type:");
-            System.out.println("\t>> ");
+            System.out.println("      Check valid inputs from https://developer.edamam.com/edamam-docs-recipe-api");
+            System.out.print("\t>> ");
             String dishType = scanner.nextLine();
 
             System.out.println("Enter cuisine type:");
-            System.out.println("\t>> ");
+            System.out.println("      Check valid inputs from https://developer.edamam.com/edamam-docs-recipe-api");
+            System.out.print("\t>> ");
             String cuisineType = scanner.nextLine();
 
             data = makeRequest(getUrlQ(keyWord, dietLabels, healthLabels, mealType, dishType, cuisineType));
             JSONArray arr = data.getJSONArray("hits");
 
-
             if (arr.length() > 0) {
                 success = true;
             } else {
-                System.out.println("no results for \"" + keyWord + "\"");
+                System.out.println("no recipe was found according to your selected criteria");
+                System.out.println("");
                 System.out.print("");
+                return;
             }
-            index = arr.length();
-            if (index == 1) {
-                System.out.println(index + " recipes was found.");
-            } else if (index >= 100) {
+
+
+            int arr_length = arr.length();
+            if (arr_length == 1) {
+                System.out.println(arr_length + " recipes was found.");
+            } else if (arr_length >= 100) {
                 System.out.println("100 recipes or more than 100 recipes were found");
-                index = 100;
+                arr_length = 100;
             } else {
-                System.out.println(index + " recipes were found.");
+                System.out.println(arr_length + " recipes were found.");
             }
+
+
+            index = displayRecipeLabels(data, index, arr_length);
+
+
             boolean findotherreceipes = false;
             while (!findotherreceipes) {
-                System.out.println(" input recipe number (1-" + index + ")\n (enter q to find other recipes)");
+                System.out.println(" input recipe number or \n       (n)ext to display next 10 recipes or \n       (p)revious to display previous 10 recipes or \n       (q)uit to find other recipes");
                 String select = selectFromIndex(index, scanner);
                 if (select == "q") {
                     findotherreceipes=true;
+                } else if (select == "n") {
+                    index = displayRecipeLabels(data, index, arr_length);
+                } else if (select == "p") {
+                    index = index - 20;
+                    if (index < 0) {
+                        index = 0;
+                    }
+                    index = displayRecipeLabels(data, index, arr_length);
                 } else {
                     selectRecipe(data, index, select, scanner);
                 }
@@ -103,6 +123,12 @@ public class RecipeFinder {
                 select = selectRecipeFromIndex(maxIndex, scanner);
             }
             if (select.equalsIgnoreCase("q")) {
+                System.out.println();
+                return;
+            } else if (select.equalsIgnoreCase("n")) {
+                System.out.println();
+                return;
+            } else if (select.equalsIgnoreCase("p")) {
                 System.out.println();
                 return;
             } else {
@@ -162,6 +188,7 @@ public class RecipeFinder {
                 url += "&cuisineType=" + URLEncoder.encode(cuisineType, "UTF-8");
             }
 
+
             System.out.println(url);
             return url;
 
@@ -170,12 +197,16 @@ public class RecipeFinder {
         }
     }
 
-    public static int displayRecipeLabels(JSONObject data, int index) {
+    public static int displayRecipeLabels(JSONObject data, int index, int arr_length) {
         System.out.println();
         JSONArray hits = data.getJSONArray("hits");
-        for (int i = 0; i < hits.length(); i++) {
-            index++;
-            System.out.printf(" " + index + ")", hits.getJSONObject(i).getJSONObject("recipe").getString("label"));
+        for (int i = 0; i < 10; i++) {
+            if (index < arr_length) {
+                String slabel = hits.getJSONObject(index).getJSONObject("recipe").getString("label");
+                int print_index = index + 1;
+                System.out.println(" (" + print_index + ") " + slabel);
+                index++;
+            }
         }
         System.out.println();
         return index;
@@ -193,6 +224,10 @@ public class RecipeFinder {
             select = scanner.nextLine();
             if (select.equalsIgnoreCase("q")) {
                 return "q";
+            } else if (select.equalsIgnoreCase("n")) {
+                return "n";
+            } else if (select.equalsIgnoreCase("p")) {
+                return "p";
             } else {
                 try {
                     select = Integer.toString(Integer.parseInt(select));
