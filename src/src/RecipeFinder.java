@@ -1,16 +1,9 @@
+import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Scanner;
 
 public class RecipeFinder {
-    private static final String APP_ID = "30ccd393";
-    private static final String APP_KEYS = "bd712aef489acbcfd24a515b6e18fb08";
-    private static final String URL = "https://api.edamam.com/search?/app_id=" + APP_ID + "&app_key=" + APP_KEYS;
 
     public static void main(String[] args) {
         boolean endprogram = false;
@@ -67,10 +60,18 @@ public class RecipeFinder {
             System.out.print("\t>> ");
             String cuisineType = scanner.nextLine();
 
-            data = makeRequest(getUrlQ(keyWord, dietLabels, healthLabels, mealType, dishType, cuisineType));
-            JSONArray arr = data.getJSONArray("hits");
+            SearchCls SearchKeyword = new SearchCls(keyWord);
+            FilterCls FilterCriteria = new FilterCls(dietLabels, healthLabels, mealType, dishType, cuisineType);
 
-            if (arr.length() > 0) {
+            UrlCls UrlClass = new UrlCls (SearchKeyword, FilterCriteria);
+            String Url = UrlClass.getUrl();
+            System.out.println(Url);
+
+            DataCls dataClass = new DataCls(Url);
+            data = dataClass.getData();
+            int arr_length = dataClass.getArraylength();
+
+            if (arr_length > 0) {
                 success = true;
             } else {
                 System.out.println("no recipe was found according to your selected criteria");
@@ -79,8 +80,6 @@ public class RecipeFinder {
                 return;
             }
 
-
-            int arr_length = arr.length();
             if (arr_length == 1) {
                 System.out.println(arr_length + " recipes was found.");
             } else if (arr_length >= 100) {
@@ -90,9 +89,7 @@ public class RecipeFinder {
                 System.out.println(arr_length + " recipes were found.");
             }
 
-
             index = displayRecipeLabels(data, index, arr_length);
-
 
             boolean findotherreceipes = false;
             while (!findotherreceipes) {
@@ -109,112 +106,27 @@ public class RecipeFinder {
                     }
                     index = displayRecipeLabels(data, index, arr_length);
                 } else {
-                    selectRecipe(data, index, select, scanner);
+                    int selection = Integer.parseInt(select);
+                    currRecipeCls currRecipe = new currRecipeCls(data, selection);
+                    displayRecipeDict(currRecipe);
                 }
             }
         }
     }
 
-    public static void selectRecipe(JSONObject data, int maxIndex, String select, Scanner scanner) {
-        boolean invalid = true;
-        int selection = 0;
-        while (invalid) {
-            if (select.equals("-1")) {
-                select = selectRecipeFromIndex(maxIndex, scanner);
-            }
-            if (select.equalsIgnoreCase("q")) {
-                System.out.println();
-                return;
-            } else if (select.equalsIgnoreCase("n")) {
-                System.out.println();
-                return;
-            } else if (select.equalsIgnoreCase("p")) {
-                System.out.println();
-                return;
-            } else {
-                try {
-                    selection = Integer.parseInt(select);
-                    invalid = false;
-                } catch (NumberFormatException e) {
-                    invalid = true;
-                    select = "-1";
-                }
-            }
-        }
-        selection = Integer.parseInt(select);
-        JSONObject recipeResponse = data.getJSONArray("hits").getJSONObject(selection);
-        JSONObject recipe = recipeResponse.getJSONObject("recipe");
-        JSONObject currRecipe = filterResponse(recipe);
-        displayRecipeDict(currRecipe);
-    }
-
-    public static JSONObject makeRequest(String url) {
-        try {
-            String response = Jsoup.connect(url).ignoreContentType(true).execute().body();
-            JSONObject data = new JSONObject(response);
-            return data;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static String getUrlQ(String keyWord, String dietLabels, String healthLabels, String mealType, String dishType, String cuisineType) {
-        return getUrlQ(keyWord, 0, 100, dietLabels, healthLabels, mealType, dishType, cuisineType);
-    }
-
-    public static String getUrlQ(String keyWord, int _from, int _to, String dietLabels, String healthLabels, String mealType, String dishType, String cuisineType) {
-        try {
-            String urlencode = URLEncoder.encode(keyWord, "UTF-8");
-            String url = URL + "&q=" + urlencode + "&to=" + _to + "&from=" + _from;
-
-            if (dietLabels != null && !dietLabels.isEmpty()) {
-                url += "&diet=" + URLEncoder.encode(dietLabels, "UTF-8");
-            }
-
-            if (healthLabels != null && !healthLabels.isEmpty()) {
-                url += "&health=" + URLEncoder.encode(healthLabels, "UTF-8");
-            }
-
-            if (mealType != null && !mealType.isEmpty()) {
-                url += "&mealType=" + URLEncoder.encode(mealType, "UTF-8");
-            }
-
-            if (dishType != null && !dishType.isEmpty()) {
-                url += "&dishType=" + URLEncoder.encode(dishType, "UTF-8");
-            }
-
-            if (cuisineType != null && !cuisineType.isEmpty()) {
-                url += "&cuisineType=" + URLEncoder.encode(cuisineType, "UTF-8");
-            }
-
-
-            System.out.println(url);
-            return url;
-
-        } catch (UnsupportedEncodingException e) {
-            return e.toString();
-        }
-    }
 
     public static int displayRecipeLabels(JSONObject data, int index, int arr_length) {
         System.out.println();
-        JSONArray hits = data.getJSONArray("hits");
+        HitsCls hits = new HitsCls(data, index, arr_length);
+        String[] hitsArray = hits.getHitsArray();
         for (int i = 0; i < 10; i++) {
-            if (index < arr_length) {
-                String slabel = hits.getJSONObject(index).getJSONObject("recipe").getString("label");
-                int print_index = index + 1;
-                System.out.println(" (" + print_index + ") " + slabel);
+            if (hitsArray[i] != null) {
+                System.out.println(hitsArray[i]);
                 index++;
             }
         }
         System.out.println();
         return index;
-    }
-
-    public static String selectRecipeFromIndex(int maxIndex, Scanner scanner) {
-        System.out.println(" Select recipe number (1-" + maxIndex + ")");
-        return selectFromIndex(maxIndex, scanner);
     }
 
     public static String selectFromIndex(int maxIndex, Scanner scanner) {
@@ -240,28 +152,18 @@ public class RecipeFinder {
         return Integer.toString(Integer.parseInt(select) - 1);
     }
 
-    public static JSONObject filterResponse(JSONObject recipe) {
-        JSONObject currRecipe = new JSONObject();
-        currRecipe.put("ingredients_line", recipe.getJSONArray("ingredientLines"));
-        currRecipe.put("ingredients", recipe.getJSONArray("ingredients"));
-        currRecipe.put("label", recipe.getString("label"));
-        currRecipe.put("url", recipe.getString("url"));
-        currRecipe.put("uri", recipe.getString("uri"));
-        return currRecipe;
-    }
-
-    public static void displayRecipeDict(JSONObject currRecipe) {
+    public static void displayRecipeDict(currRecipeCls currRecipe) {
         System.out.println();
-        System.out.println("====================================================");
-        System.out.println(currRecipe.getString("label") + ":");
-        System.out.println("----------------------------------------------------");
-        JSONArray ingredientsLine = currRecipe.getJSONArray("ingredients_line");
+        System.out.println("==========================================================================");
+        System.out.println(currRecipe.getcurrRecipeLabel() + ":");
+        System.out.println("--------------------------------------------------------------------------");
+        JSONArray ingredientsLine = currRecipe.getingredientsLine();
         for (int i = 0; i < ingredientsLine.length(); i++) {
             System.out.println(" - " + ingredientsLine.getString(i));
         }
         System.out.println();
-        System.out.println("Directions: " + currRecipe.getString("url"));
-        System.out.println("====================================================");
+        System.out.println("Directions: " + currRecipe.getcurrRecipeUrl());
+        System.out.println("==========================================================================");
         System.out.print("");
     }
 }
