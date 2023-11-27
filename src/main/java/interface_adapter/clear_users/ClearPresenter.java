@@ -1,7 +1,7 @@
 package fantastticfour.src.main.java.interface_adapter.clear_users;
 
-import use_case.clear_users.ClearOutputBoundary;
-import use_case.clear_users.ClearOutputData;
+import fantastticfour.src.main.java.use_case.clear_users.ClearOutputBoundary;
+import fantastticfour.src.main.java.use_case.clear_users.ClearOutputData;
 
 public class ClearPresenter  implements ClearOutputBoundary {
 

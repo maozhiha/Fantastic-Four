@@ -1,4 +1,8 @@
-package use_case.welcome_user;
+package fantastticfour.src.main.java.use_case.welcome_user;
+
+import use_case.welcome_user.WelcomeUserInputBoundary;
+import use_case.welcome_user.WelcomeUserOutputBoundary;
+
 
 public class WelcomeUserInteractor implements WelcomeUserInputBoundary {
 
