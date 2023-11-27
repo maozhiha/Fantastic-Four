@@ -1,7 +1,7 @@
 package fantastticfour.src.main.java.interface_adapter.signup;
 
-import use_case.signup.SignupInputBoundary;
-import use_case.signup.SignupInputData;
+import fantastticfour.src.main.java.use_case.signup.SignupInputBoundary;
+import fantastticfour.src.main.java.use_case.signup.SignupInputData;
 
 public class SignupController {
 
