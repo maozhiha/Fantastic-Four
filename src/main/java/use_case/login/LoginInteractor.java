@@ -1,6 +1,6 @@
 package fantastticfour.src.main.java.use_case.login;
 
-import entity.User;
+import fantastticfour.src.main.java.entity.User;
 
 public class LoginInteractor implements LoginInputBoundary {
     final LoginUserDataAccessInterface userDataAccessObject;

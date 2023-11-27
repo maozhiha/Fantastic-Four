@@ -1,7 +1,7 @@
 package fantastticfour.src.main.java.use_case.signup;
 
-import entity.User;
-import entity.UserFactory;
+import fantastticfour.src.main.java.entity.User;
+import fantastticfour.src.main.java.entity.UserFactory;
 
 import java.time.LocalDateTime;
 
