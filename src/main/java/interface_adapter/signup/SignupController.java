@@ -17,5 +17,3 @@ public class SignupController {
         userSignupUseCaseInteractor.execute(signupInputData);
     }
 }
-// In SignupController class
-
