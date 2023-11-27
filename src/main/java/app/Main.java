@@ -1,9 +1,9 @@
-package app;
+package fantastticfour.src.main.java.app;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.weclome_user.WelcomeUserViewModel;
-import view.ExampleView;
-import view.ViewManager;
+import fantastticfour.src.main.java.view.ExampleView;
+import fantastticfour.src.main.java.view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;

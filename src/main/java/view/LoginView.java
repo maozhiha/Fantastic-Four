@@ -1,8 +1,8 @@
 package fantastticfour.src.main.java.view;
 
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
+import fantastticfour.src.main.java.interface_adapter.login.LoginController;
+import fantastticfour.src.main.java.interface_adapter.login.LoginState;
+import fantastticfour.src.main.java.interface_adapter.login.LoginViewModel;
 
 import javax.swing.*;
 import java.awt.*;
