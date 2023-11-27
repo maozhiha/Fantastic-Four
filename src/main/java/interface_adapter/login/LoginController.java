@@ -1,7 +1,7 @@
 package fantastticfour.src.main.java.interface_adapter.login;
 
-import use_case.login.LoginInputBoundary;
-import use_case.login.LoginInputData;
+import fantastticfour.src.main.java.use_case.login.LoginInputBoundary;
+import fantastticfour.src.main.java.use_case.login.LoginInputData;
 
 public class LoginController {
 
