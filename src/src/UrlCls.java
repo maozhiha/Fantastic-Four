@@ -54,4 +54,3 @@ public class UrlCls implements UrlInterface {
     }
 
 }
-
