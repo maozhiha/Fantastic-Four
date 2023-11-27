@@ -1,10 +1,10 @@
 package fantastticfour.src.main.java.interface_adapter.signup;
 
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
+import fantastticfour.src.main.java.interface_adapter.login.LoginState;
+import fantastticfour.src.main.java.interface_adapter.login.LoginViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.signup.SignupOutputBoundary;
-import use_case.signup.SignupOutputData;
+import fantastticfour.src.main.java.use_case.signup.SignupOutputBoundary;
+import fantastticfour.src.main.java.use_case.signup.SignupOutputData;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
