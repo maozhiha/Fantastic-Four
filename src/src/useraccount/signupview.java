@@ -1,11 +1,11 @@
 package useraccount;
 
+import fantastticfour.src.main.java.interface_adapter.signup.SignupController;
+import fantastticfour.src.main.java.interface_adapter.signup.SignupViewModel;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -13,7 +13,7 @@ public class signupview {
 }
 
 
-public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
+class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "sign up";
 
     private final SignupViewModel signupViewModel;
@@ -26,5 +26,21 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JButton cancel;
     private final JButton clear;
 
-    public SignupView() {
+    public SignupView(SignupViewModel signupViewModel, SignupController signupController, JButton signUp, JButton cancel, JButton clear) {
+        this.signupViewModel = signupViewModel;
+        this.signupController = signupController;
+        this.signUp = signUp;
+        this.cancel = cancel;
+        this.clear = clear;
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
+}
