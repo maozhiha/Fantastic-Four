@@ -1,7 +1,7 @@
 package fantastticfour.src.main.java.interface_adapter.clear_users;
 
-import use_case.clear_users.ClearInputBoundary;
-import use_case.clear_users.ClearInputData;
+import fantastticfour.src.main.java.use_case.clear_users.ClearInputBoundary;
+import fantastticfour.src.main.java.use_case.clear_users.ClearInputData;
 
 public class ClearController {
     final ClearInputBoundary clearInputBoundary;
