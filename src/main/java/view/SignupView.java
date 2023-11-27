@@ -1,5 +1,7 @@
-package view;
+package fantastticfour.src.main.java.view;
 
+import interface_adapter.clear_users.ClearController;
+import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -17,18 +19,26 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     public final String viewName = "sign up";
 
     private final SignupViewModel signupViewModel;
+    private final ClearViewModel clearViewModel;
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private final SignupController signupController;
 
+    private final ClearController clearController;
+
     private final JButton signUp;
     private final JButton cancel;
+
+    // TODO Note: this is the new JButton for clearing the users file
     private final JButton clear;
 
-    public SignupView(SignupController controller, SignupViewModel signupViewModel) {
+    public SignupView(SignupController controller, ClearController clearController, SignupViewModel signupViewModel,ClearViewModel clearViewModel) {
+
         this.signupController = controller;
+        this.clearController = clearController;
         this.signupViewModel = signupViewModel;
+        this.clearViewModel = clearViewModel;
         signupViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
@@ -47,79 +57,44 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
+        // TODO Note: the following line instantiates the "clear" button; it uses
+        //      a CLEAR_BUTTON_LABEL constant which is defined in the SignupViewModel class.
+        //      You need to add this "clear" button to the "buttons" panel.
         clear = new JButton(SignupViewModel.CLEAR_BUTTON_LABEL);
-        buttons.add(clear);  // Add the clear button to the buttons panel
-        signUp.addActionListener(e -> {
-            String username = usernameInputField.getText();
-            char[] password = passwordInputField.getPassword();
-            char[] repeatPassword = repeatPasswordInputField.getPassword();
-            if (Arrays.equals(password, repeatPassword)) {
-                // Implement the actual sign up logic in the SignupController
-                // This should involve creating the user account and handling errors
-                signupController.signupUser(username, new String(password));
-            } else {
-                // Handle the case where passwords do not match
-                JOptionPane.showMessageDialog(this, "Passwords do not match.");
-            }
-        });
+        buttons.add(clear);
 
-        // Clear button functionality to clear all input fields
-        clear.addActionListener(e -> {
-            usernameInputField.setText("");
-            passwordInputField.setText("");
-            repeatPasswordInputField.setText("");
-        });
-        signUp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (evt.getSource().equals(signUp)) {
-                    SignupState currentState = signupViewModel.getState();
-                    signupController.execute(
-                            currentState.getUsername(),
-                            currentState.getPassword(),
-                            currentState.getRepeatPassword()
+        signUp.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(signUp)) {
+                            SignupState currentState = signupViewModel.getState();
 
-                    );
+                            signupController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getPassword(),
+                                    currentState.getRepeatPassword()
+                            );
+                        }
+                    }
                 }
-            }
-        });
-        signUp.addActionListener(e -> {
-            // Get the username and passwords from the text fields
-            String username = usernameInputField.getText();
-            char[] password = passwordInputField.getPassword();
-            char[] repeatPassword = repeatPasswordInputField.getPassword();
+        );
 
-            // Check if the passwords match
-            if (!Arrays.equals(password, repeatPassword)) {
-                showMessage("Passwords do not match.");
-                return;
-            }
+        // TODO Add the body to the actionPerformed method of the action listener below
+        //      for the "clear" button. You'll need to write the controller before
+        //      you can complete this.
+        clear.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
 
-            // Further validation can be performed here (password strength, username format, etc.)
+                        clearController.clearAllUsers();
 
-            // Attempt to create the account using the controller
-            boolean success = signupController.createUserAccount(username, new String(password));
-
-            if (success) {
-                showMessage("Account created successfully.");
-                // Clear the fields after successful account creation
-                clearFields();
-            } else {
-                showMessage("Account creation failed. Username may already exist or invalid.");
-            }
-        });
-
-        // Implement the clear button functionality
-        clear.addActionListener(e -> clearFields());
-
-
-        clear.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Since SignupController does not have a clearUsers() method,
-                // we'll simply display a message for now.
-                showMessage("Clear function not implemented yet.");
-            }
-        });
+                        String resultMessage = clearViewModel.getStatusMessage();
+                        JOptionPane.showMessageDialog(SignupView.this, resultMessage);
+                    }
+                }
+        );
 
         cancel.addActionListener(this);
 
@@ -210,8 +185,5 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         if (state.getUsernameError() != null) {
             JOptionPane.showMessageDialog(this, state.getUsernameError());
         }
-    }
-    public void showMessage(String message) {
-        JOptionPane.showMessageDialog(this, message);
     }
 }
