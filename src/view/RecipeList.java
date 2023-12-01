@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.*;
+import use_case.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -30,6 +31,7 @@ public class RecipeList extends JFrame {
                 String input = tfInput.getText();
                 // Set user choice in the controller
                 Controller.setUserChoice(input);
+                RecipesDisplayer2.DisplayRecipes();
             }
             //System.out.println(input);
         });

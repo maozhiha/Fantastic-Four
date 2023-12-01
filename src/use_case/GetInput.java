@@ -45,7 +45,7 @@ public class GetInput {
                 return;
             }
             Controller.setResultData(data, index, arr_length);
-            System.out.println("11111");
+            //System.out.println("11111");
             //RecipesDisplayer recipesDisplayer = new RecipesDisplayer();
             //System.out.println("222222");
             RecipesDisplayer.DisplayRecipes();

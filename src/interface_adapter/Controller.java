@@ -16,6 +16,9 @@ public class Controller {
     private static int arr_length;
     private static String hit;
     private static ArrayList<String> hitsArray = new ArrayList<>();
+    public static void setindex(int index){
+        Controller.index = index;
+    }
     public static void setUserChoice(String choice) {
         Controller.userChoice = choice;
     }
