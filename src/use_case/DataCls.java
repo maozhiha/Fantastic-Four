@@ -1,3 +1,5 @@
+package use_case;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -9,8 +11,8 @@ public class DataCls implements DataInterface {
 
     public DataCls(String Url) {
         try {
-            String response = Jsoup.connect(Url).ignoreContentType(true).execute().body();
-            data = new JSONObject(response);
+            String response = Jsoup.connect(Url).ignoreContentType(true).execute().body(); //call api
+            data = new JSONObject(response); // save the url as a JSONObject
 
         } catch (IOException e) {
             e.printStackTrace();

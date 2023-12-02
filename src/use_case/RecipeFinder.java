@@ -1,6 +1,9 @@
-import java.util.Scanner;
+package use_case;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.Scanner;
 
 
 public class RecipeFinder {
@@ -39,6 +42,7 @@ public class RecipeFinder {
             System.out.println("      Check valid inputs from https://developer.edamam.com/edamam-docs-recipe-api");
             System.out.print("\t>> ");
             String dietLabels = scanner.nextLine();
+           // System.out.println(dietLabels);
 
             System.out.println("Enter health labels (comma-separated):");
             System.out.println("      Check valid inputs from https://developer.edamam.com/edamam-docs-recipe-api");
@@ -60,16 +64,16 @@ public class RecipeFinder {
             System.out.print("\t>> ");
             String cuisineType = scanner.nextLine();
 
-            SearchCls SearchKeyword = new SearchCls(keyWord);
-            FilterCls FilterCriteria = new FilterCls(dietLabels, healthLabels, mealType, dishType, cuisineType);
+            SearchCls SearchKeyword = new SearchCls(keyWord); //save keywords
+            FilterCls FilterCriteria = new FilterCls(dietLabels, healthLabels, mealType, dishType, cuisineType); //save filter
 
-            UrlCls UrlClass = new UrlCls (SearchKeyword, FilterCriteria);
-            String Url = UrlClass.getUrl();
+            UrlCls UrlClass = new UrlCls (SearchKeyword, FilterCriteria); //pass keywords and filter into urlcls
+            String Url = UrlClass.getUrl(); //get url
             System.out.println(Url);
 
-            DataCls dataClass = new DataCls(Url);
-            data = dataClass.getData();
-            int arr_length = dataClass.getArraylength();
+            DataCls dataClass = new DataCls(Url);//pass url into datacl to get data
+            data = dataClass.getData(); //get data
+            int arr_length = dataClass.getArraylength(); //get how many recipes
 
             if (arr_length > 0) {
                 success = true;
@@ -89,7 +93,7 @@ public class RecipeFinder {
                 System.out.println(arr_length + " recipes were found.");
             }
 
-            index = displayRecipeLabels(data, index, arr_length);
+            index = displayRecipeLabels(data, index, arr_length); // to separate the info
 
             boolean findotherreceipes = false;
             while (!findotherreceipes) {

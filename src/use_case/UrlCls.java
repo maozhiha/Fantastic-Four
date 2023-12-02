@@ -1,3 +1,5 @@
+package use_case;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -54,4 +56,3 @@ public class UrlCls implements UrlInterface {
     }
 
 }
-
