@@ -1,7 +1,7 @@
 package view;
 
-import interface_adapter.*;
-import use_case.*;
+import interface_adapter.search.Controller;
+import use_case.seach.GetInput;
 
 import javax.swing.*;
 import java.awt.event.*;
