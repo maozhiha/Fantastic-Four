@@ -1,4 +1,4 @@
-package fantastticfour.src.main.java.app;
+package app;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.weclome_user.WelcomeUserViewModel;
