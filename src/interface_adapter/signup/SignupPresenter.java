@@ -1,8 +1,9 @@
-package fantastticfour.src.main.java.interface_adapter.signup;
+package interface_adapter.signup;
 
-import fantastticfour.src.main.java.interface_adapter.login.LoginState;
-import fantastticfour.src.main.java.interface_adapter.login.LoginViewModel;
+
 import interface_adapter.ViewManagerModel;
+import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
 

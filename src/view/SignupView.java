@@ -2,9 +2,9 @@ package view;
 
 import interface_adapter.clear_users.ClearController;
 import interface_adapter.clear_users.ClearViewModel;
-import fantastticfour.src.main.java.interface_adapter.signup.SignupController;
-import fantastticfour.src.main.java.interface_adapter.signup.SignupState;
-import fantastticfour.src.main.java.interface_adapter.signup.SignupViewModel;
+import interface_adapter.signup.SignupController;
+import interface_adapter.signup.SignupState;
+import interface_adapter.signup.SignupViewModel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
 package use_case.seach;
 
-import interface_adapter.search.Controller;
+import interface_adapter.search_form.SearchFormController;
 import org.json.*;
 import view.*;
 
@@ -10,9 +10,9 @@ public class RecipesDisplayer {
     
     public static void DisplayRecipes() {
         // Retrieve data from the controller
-        JSONObject data = Controller.getRecipeData();
-        int arr_length = Controller.getArrLength();
-        int index = Controller.getIndex();
+        JSONObject data = SearchFormController.getRecipeData();
+        int arr_length = SearchFormController.getArrLength();
+        int index = SearchFormController.getIndex();
 
         RecipeList recipeList = new RecipeList(null);
         //if (arr_length == 1) {
@@ -25,7 +25,7 @@ public class RecipesDisplayer {
         //}
         
         index = displayRecipeLabels(data, index, arr_length, recipeList);
-        Controller.setindex(index);
+        SearchFormController.setindex(index);
     }    
 
     //public static void DisplayRecipesFurther() {
@@ -76,7 +76,7 @@ public class RecipesDisplayer {
         for (int i = 0; i < 10; i++) {
             if (hitsArray[i] != null) {
                 //System.out.println(hitsArray[i]);
-                Controller.setRecipeList(hitsArray[i]);
+                SearchFormController.setRecipeList(hitsArray[i]);
                 recipes.add(hitsArray[i]);
                 index++;
             }

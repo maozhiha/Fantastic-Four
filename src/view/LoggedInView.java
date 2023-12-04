@@ -1,7 +1,9 @@
 package view;
 
-import fantastticfour.src.main.java.interface_adapter.logged_in.LoggedInState;
-import fantastticfour.src.main.java.interface_adapter.logged_in.LoggedInViewModel;
+
+
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
 
 import javax.swing.*;
 import java.awt.*;

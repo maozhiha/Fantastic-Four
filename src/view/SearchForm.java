@@ -1,6 +1,6 @@
 package view;
 
-import interface_adapter.search.Controller;
+import interface_adapter.search_form.SearchFormController;
 import use_case.seach.GetInput;
 
 import javax.swing.*;
@@ -54,7 +54,7 @@ public class SearchForm extends JFrame {
                 String cuisineSubString = formatSelectedValuesList(listCuisineType);
                 //GetInput.searchRecipes(keywords, dietSubString, healthSubString, mealTypeSubString, dishSubString, cuisineSubString);
                 // Set data in the controller
-                Controller.setSearchData(keywords, dietSubString, healthSubString, mealTypeSubString, dishSubString, cuisineSubString);
+                SearchFormController.setSearchData(keywords, dietSubString, healthSubString, mealTypeSubString, dishSubString, cuisineSubString);
 
                 // Perform search
                 GetInput.searchRecipes();
@@ -62,7 +62,7 @@ public class SearchForm extends JFrame {
                 //openRecipeList(Controller.gethit());
                 // Notify the listener when the search is complete
                 if (searchCompleteListener != null) {
-                    ArrayList<String> recipeData = Controller.gethit();
+                    ArrayList<String> recipeData = SearchFormController.gethit();
                     searchCompleteListener.onSearchComplete(recipeData);
             }
             }
@@ -92,6 +92,5 @@ public class SearchForm extends JFrame {
                 recipeList.setVisible(true);
                 });
         });
-
     }
 }

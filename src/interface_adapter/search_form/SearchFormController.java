@@ -1,9 +1,19 @@
-package interface_adapter.search;
+package interface_adapter.search_form;
 
 import org.json.*;
+import use_case.seach.SearchFormInputBoundary;
+import use_case.seach.SearchFormInputData;
+
 import java.util.ArrayList;
 
-public class Controller {
+public class SearchFormController {
+
+    final SearchFormInputBoundary searchFormUseCaseInteractor;
+
+    public SearchFormController(SearchFormInputBoundary searchFormUseCaseInteractor) {
+        this.searchFormUseCaseInteractor = searchFormUseCaseInteractor;
+    }
+
     private static String keywords;
     private static String dietSubString;
     private static String healthSubString;
@@ -17,30 +27,30 @@ public class Controller {
     private static String hit;
     private static ArrayList<String> hitsArray = new ArrayList<>();
     public static void setindex(int index){
-        Controller.index = index;
+        SearchFormController.index = index;
     }
     public static void setUserChoice(String choice) {
-        Controller.userChoice = choice;
+        SearchFormController.userChoice = choice;
     }
     public static String getUserChoice() {
         return userChoice;
     }
     public static void setRecipeList(String hit){
-        Controller.hit = hit;
-        Controller.hitsArray.add(hit);
+        SearchFormController.hit = hit;
+        SearchFormController.hitsArray.add(hit);
     }
     public static void setResultData(JSONObject data, int index, int arr_length){
-        Controller.data = data;
-        Controller.index = index;
-        Controller.arr_length = arr_length;
+        SearchFormController.data = data;
+        SearchFormController.index = index;
+        SearchFormController.arr_length = arr_length;
     }
     public static void setSearchData(String keywords, String diet, String health, String mealType, String dish, String cuisine) {
-        Controller.keywords = keywords;
-        Controller.dietSubString = diet;
-        Controller.healthSubString = health;
-        Controller.mealTypeSubString = mealType;
-        Controller.dishSubString = dish;
-        Controller.cuisineSubString = cuisine;
+        SearchFormController.keywords = keywords;
+        SearchFormController.dietSubString = diet;
+        SearchFormController.healthSubString = health;
+        SearchFormController.mealTypeSubString = mealType;
+        SearchFormController.dishSubString = dish;
+        SearchFormController.cuisineSubString = cuisine;
     }
 
     public static String getKeywords() {
@@ -82,6 +92,13 @@ public class Controller {
          //   return hitsArray.get(i);
         //}
         return hitsArray;
+    }
+
+    public void execute(String keywords, String diet, String health, String mealType, String dish, String cuisine) {
+        SearchFormInputData searchFormInputData = new SearchFormInputData(
+                keywords, diet, health, mealType, dish, cuisine);
+
+        searchFormUseCaseInteractor.execute(searchFormInputData);
     }
 }
 

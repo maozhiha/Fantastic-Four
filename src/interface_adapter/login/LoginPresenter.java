@@ -1,8 +1,8 @@
-package fantastticfour.src.main.java.interface_adapter.login;
+package interface_adapter.login;
 
 import interface_adapter.ViewManagerModel;
-import fantastticfour.src.main.java.interface_adapter.logged_in.LoggedInState;
-import fantastticfour.src.main.java.interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 

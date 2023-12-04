@@ -1,8 +1,10 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.search_form.SearchFormViewModel;
 import interface_adapter.weclome_user.WelcomeUserViewModel;
 import view.ExampleView;
+import view.SearchFormView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -28,12 +30,15 @@ public class Main {
         // Create View Model First
         // Before creating new view, we need to create their view model
         WelcomeUserViewModel welcomeUserViewModel = new WelcomeUserViewModel();
+        SearchFormViewModel searchFormViewModel = new SearchFormViewModel();
 
         //
         ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
+        SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel);
         views.add(exampleView, exampleView.viewName);
+        views.add(searchFormView, searchFormView.viewName);
 
-        viewManagerModel.setActiveView(exampleView.viewName);
+        viewManagerModel.setActiveView(searchFormView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
