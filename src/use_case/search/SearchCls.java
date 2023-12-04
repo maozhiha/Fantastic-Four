@@ -1,4 +1,4 @@
-package use_case.seach;
+package use_case.search;
 
 public class SearchCls implements searchInterface {
     private String keyword;

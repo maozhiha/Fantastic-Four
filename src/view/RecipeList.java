@@ -1,7 +1,7 @@
 package view;
 
 import interface_adapter.search_form.SearchFormController;
-import use_case.seach.RecipesDisplayer2;
+import use_case.search.RecipesDisplayer2;
 
 import javax.swing.*;
 import java.awt.event.*;

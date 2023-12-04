@@ -1,7 +1,7 @@
 package view;
 
 import interface_adapter.search_form.SearchFormController;
-import use_case.seach.GetInput;
+import use_case.search.GetInput;
 
 import javax.swing.*;
 import java.awt.event.*;

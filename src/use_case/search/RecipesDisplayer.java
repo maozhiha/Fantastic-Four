@@ -1,4 +1,4 @@
-package use_case.seach;
+package use_case.search;
 
 import interface_adapter.search_form.SearchFormController;
 import org.json.*;

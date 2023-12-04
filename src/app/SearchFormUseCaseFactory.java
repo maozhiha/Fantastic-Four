@@ -4,10 +4,9 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.search_form.SearchFormController;
 import interface_adapter.search_form.SearchFormPresenter;
 import interface_adapter.search_form.SearchFormViewModel;
-import use_case.seach.SearchFormInputBoundary;
-import use_case.seach.SearchFormInteractor;
-import use_case.seach.SearchFormOutputBoundary;
-import use_case.seach.SearchFormOutputData;
+import use_case.search.SearchFormInputBoundary;
+import use_case.search.SearchFormInteractor;
+import use_case.search.SearchFormOutputBoundary;
 import view.SearchFormView;
 
 public class SearchFormUseCaseFactory {

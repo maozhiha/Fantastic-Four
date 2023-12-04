@@ -1,8 +1,8 @@
 package interface_adapter.search_form;
 
 import org.json.*;
-import use_case.seach.SearchFormInputBoundary;
-import use_case.seach.SearchFormInputData;
+import use_case.search.SearchFormInputBoundary;
+import use_case.search.SearchFormInputData;
 
 import java.util.ArrayList;
 

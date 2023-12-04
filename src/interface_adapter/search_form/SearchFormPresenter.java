@@ -1,8 +1,8 @@
 package interface_adapter.search_form;
 
 import interface_adapter.ViewManagerModel;
-import use_case.seach.SearchFormOutputBoundary;
-import use_case.seach.SearchFormOutputData;
+import use_case.search.SearchFormOutputBoundary;
+import use_case.search.SearchFormOutputData;
 
 public class SearchFormPresenter implements SearchFormOutputBoundary {
 

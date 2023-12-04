@@ -1,4 +1,4 @@
-package use_case.seach;
+package use_case.search;
 
 public interface SearchFormInputBoundary {
     void execute(SearchFormInputData searchFormInputData);
