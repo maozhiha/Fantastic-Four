@@ -1,4 +1,4 @@
-package fantastticfour.src.main.java.entity;
+package entity;
 
 public interface PasswordValidator {
     public boolean passwordIsValid(String password);

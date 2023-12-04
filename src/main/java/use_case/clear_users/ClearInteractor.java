@@ -1,4 +1,4 @@
-package fantastticfour.src.main.java.use_case.clear_users;
+package use_case.clear_users;
 
 public class ClearInteractor implements ClearInputBoundary {
     private ClearUserDataAccessInterface dataAccess;

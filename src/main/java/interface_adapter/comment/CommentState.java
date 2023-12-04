@@ -1,2 +1,6 @@
-package interface_adapter.comment;public class CommentState {
+package interface_adapter.comment;
+
+public class CommentState {
+    private boolean isCommentSectionVisible;
+
 }
