@@ -1,15 +1,35 @@
 package interface_adapter.search_form;
 
+import org.json.JSONObject;
+
 public class SearchFormState {
 
-    String keywords;
-    String dietSubString;
-    String healthSubString;
-    String mealTypeSubString;
-    String dishSubString;
-    String cuisineSubString;
+    private String keywords;
+    private String dietSubString;
+    private String healthSubString;
+    private String mealTypeSubString;
+    private String dishSubString;
+    private String cuisineSubString;
 
+    private JSONObject searchResult;
 
+    private int arr_length;
+
+    public JSONObject getSearchResult() {
+        return searchResult;
+    }
+
+    public void setSearchResult(JSONObject searchResult) {
+        this.searchResult = searchResult;
+    }
+
+    public int getArr_length() {
+        return arr_length;
+    }
+
+    public void setArr_length(int arr_length) {
+        this.arr_length = arr_length;
+    }
 
     public SearchFormState() {
         this.keywords = "";

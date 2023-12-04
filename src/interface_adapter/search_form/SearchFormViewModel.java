@@ -37,7 +37,7 @@ public class SearchFormViewModel extends ViewModel {
     private SearchFormState state = new SearchFormState();
 
     public SearchFormViewModel() {
-        super("Search Form");
+        super("Search Form View");
     }
 
     @Override

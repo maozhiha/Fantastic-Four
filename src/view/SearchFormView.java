@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class SearchFormView extends JPanel {
 
-    public final String viewName = "Search Form View";
+    public static final String viewName = "Search Form View";
     private final SearchFormViewModel searchFormViewModel;
 
     private final SearchFormController searchFormController;
