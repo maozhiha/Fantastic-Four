@@ -3,6 +3,7 @@ package view;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.SearchResult;
+import interface_adapter.comment.CommentController;
 import interface_adapter.recipe_list.RecipeListController;
 import interface_adapter.recipe_list.RecipeListViewModel;
 import interface_adapter.search_form.SearchFormState;
@@ -67,6 +68,8 @@ public class RecipeListView extends JPanel implements PropertyChangeListener {
                     List<String> selectedValuesList = recipeList.getSelectedValuesList();
                     if (selectedValuesList.size() > 0) {
                         // Get the selection
+                        // TODO: Add features here
+                        recipeListController.displayComment();
                     }else{
                         JOptionPane.showMessageDialog(this, "You did not select anything.");
                     }

@@ -1,6 +1,7 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.comment.CommentViewModel;
 import interface_adapter.recipe_list.RecipeListViewModel;
 import interface_adapter.search_form.SearchFormViewModel;
 import interface_adapter.weclome_user.WelcomeUserViewModel;
@@ -34,11 +35,12 @@ public class Main {
         WelcomeUserViewModel welcomeUserViewModel = new WelcomeUserViewModel();
         SearchFormViewModel searchFormViewModel = new SearchFormViewModel();
         RecipeListViewModel recipeListViewModel = new RecipeListViewModel();
+        CommentViewModel commentViewModel = new CommentViewModel();
 
         //
         ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
         SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel, recipeListViewModel);
-        RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel);
+        RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel, commentViewModel);
 
         views.add(exampleView, exampleView.viewName);
         views.add(searchFormView, searchFormView.viewName);

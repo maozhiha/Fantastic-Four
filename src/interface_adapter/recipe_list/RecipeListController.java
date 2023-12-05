@@ -17,4 +17,8 @@ public class RecipeListController {
     public void goBackToSearchForm() {
         recipeListInteractor.goBack();
     }
+
+    public void displayComment(){
+        return;
+    }
 }
