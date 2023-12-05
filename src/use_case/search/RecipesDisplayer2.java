@@ -1,6 +1,6 @@
-package use_case.seach;
+package use_case.search;
 
-import interface_adapter.search.Controller;
+import interface_adapter.search_form.SearchFormController;
 import org.json.*;
 import view.*;
 
@@ -9,10 +9,10 @@ import java.util.*;
 public class RecipesDisplayer2 {
     public static void DisplayRecipes() {
         // Retrieve data from the controller
-        JSONObject data = Controller.getRecipeData();
-        int arr_length = Controller.getArrLength();
-        int index = Controller.getIndex();
-        String select = Controller.getUserChoice();
+        JSONObject data = SearchFormController.getRecipeData();
+        int arr_length = SearchFormController.getArrLength();
+        int index = SearchFormController.getIndex();
+        String select = SearchFormController.getUserChoice();
 
         RecipeList recipeList = new RecipeList(null);
         //index = displayRecipeLabels(data, index, arr_length, recipeList);
@@ -27,7 +27,7 @@ public class RecipesDisplayer2 {
                 break;
             case "n":
                 index = displayRecipeLabels(data, index, arr_length, recipeList);
-                Controller.setindex(index);
+                SearchFormController.setindex(index);
                 break;
             case "p":
                 index = index - 20;
@@ -35,7 +35,7 @@ public class RecipesDisplayer2 {
                     index = 0;
                 }
                 index = displayRecipeLabels(data, index, arr_length, recipeList);
-                Controller.setindex(index);
+                SearchFormController.setindex(index);
                 break;
             default:
                 int selection = Integer.parseInt(select);
@@ -57,7 +57,7 @@ public class RecipesDisplayer2 {
         for (int i = 0; i < 10; i++) {
             if (hitsArray[i] != null) {
                 System.out.println(hitsArray[i]);
-                Controller.setRecipeList(hitsArray[i]);
+                SearchFormController.setRecipeList(hitsArray[i]);
                 recipes.add(hitsArray[i]);
                 index++;
             }

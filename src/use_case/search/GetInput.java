@@ -1,6 +1,6 @@
-package use_case.seach;
+package use_case.search;
 
-import interface_adapter.search.Controller;
+import interface_adapter.search_form.SearchFormController;
 import org.json.*;
 
 public class GetInput {
@@ -8,12 +8,12 @@ public class GetInput {
     public static void searchRecipes(){
             //String keyWord, String dietLabels, String healthLabels, String mealType, String dishType, String cuisineType) {
         // Retrieve data from the controller
-        String keyWord = Controller.getKeywords();
-        String dietLabels = Controller.getDietSubString();
-        String healthLabels = Controller.getHealthSubString();
-        String mealType = Controller.getMealTypeSubString();
-        String dishType = Controller.getDishSubString();
-        String cuisineType = Controller.getCuisineSubString();
+        String keyWord = SearchFormController.getKeywords();
+        String dietLabels = SearchFormController.getDietSubString();
+        String healthLabels = SearchFormController.getHealthSubString();
+        String mealType = SearchFormController.getMealTypeSubString();
+        String dishType = SearchFormController.getDishSubString();
+        String cuisineType = SearchFormController.getCuisineSubString();
         System.out.println(keyWord);
         System.out.println(mealType);
         System.out.println(cuisineType);
@@ -44,7 +44,7 @@ public class GetInput {
                 //System.out.print("");
                 return;
             }
-            Controller.setResultData(data, index, arr_length);
+            SearchFormController.setResultData(data, index, arr_length);
             //System.out.println("11111");
             //RecipesDisplayer recipesDisplayer = new RecipesDisplayer();
             //System.out.println("222222");

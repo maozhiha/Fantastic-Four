@@ -1,4 +1,4 @@
-package fantastticfour.src.main.java.interface_adapter.login;
+package interface_adapter.login;
 
 public class LoginState {
     private String username = "";

@@ -1,8 +1,12 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.recipe_list.RecipeListViewModel;
+import interface_adapter.search_form.SearchFormViewModel;
 import interface_adapter.weclome_user.WelcomeUserViewModel;
 import view.ExampleView;
+import view.RecipeListView;
+import view.SearchFormView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -28,16 +32,22 @@ public class Main {
         // Create View Model First
         // Before creating new view, we need to create their view model
         WelcomeUserViewModel welcomeUserViewModel = new WelcomeUserViewModel();
+        SearchFormViewModel searchFormViewModel = new SearchFormViewModel();
+        RecipeListViewModel recipeListViewModel = new RecipeListViewModel();
 
         //
         ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
-        views.add(exampleView, exampleView.viewName);
+        SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel, recipeListViewModel);
+        RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel);
 
-        viewManagerModel.setActiveView(exampleView.viewName);
+        views.add(exampleView, exampleView.viewName);
+        views.add(searchFormView, searchFormView.viewName);
+        views.add(recipeListView, recipeListView.viewName);
+
+        viewManagerModel.setActiveView(searchFormView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
         application.setVisible(true);
-
     }
 }
