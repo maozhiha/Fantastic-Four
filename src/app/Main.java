@@ -1,17 +1,16 @@
 package app;
 
+import data_access.CommentFileDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.comment.CommentViewModel;
 import interface_adapter.recipe_list.RecipeListViewModel;
 import interface_adapter.search_form.SearchFormViewModel;
 import interface_adapter.weclome_user.WelcomeUserViewModel;
-import view.ExampleView;
-import view.RecipeListView;
-import view.SearchFormView;
-import view.ViewManager;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -37,14 +36,23 @@ public class Main {
         RecipeListViewModel recipeListViewModel = new RecipeListViewModel();
         CommentViewModel commentViewModel = new CommentViewModel();
 
+        CommentFileDataAccessObject commentDataAccessObject;
+        try {
+            commentDataAccessObject = new CommentFileDataAccessObject("./comments.csv");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         //
         ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
         SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel, recipeListViewModel);
-        RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel, commentViewModel);
+        RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel, commentViewModel, commentDataAccessObject);
+        CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeListViewModel, commentViewModel, commentDataAccessObject);
 
         views.add(exampleView, exampleView.viewName);
         views.add(searchFormView, searchFormView.viewName);
         views.add(recipeListView, recipeListView.viewName);
+        views.add(commentView, commentView.viewName);
 
         viewManagerModel.setActiveView(searchFormView.viewName);
         viewManagerModel.firePropertyChanged();

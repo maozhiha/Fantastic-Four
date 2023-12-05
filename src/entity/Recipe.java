@@ -23,4 +23,9 @@ public class Recipe {
     public void setLabel(String label) {
         this.label = label;
     }
+
+    // This is used to get identifier of recipe
+    public String getId() {
+        return uri.substring(uri.lastIndexOf("#") + 1);
+    }
 }

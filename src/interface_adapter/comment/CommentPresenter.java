@@ -21,8 +21,18 @@ public class CommentPresenter implements CommentOutputBoundary {
 
     @Override
     public void prepareSuccessView(CommentOutputData result) {
-        return;
 
+        CommentState state = commentViewModel.getState();
 
+        state.setComments(result.getComments());
+
+        commentViewModel.setState(state);
+        commentViewModel.firePropertyChanged();
+    }
+
+    @Override
+    public void goBackToRecipeList() {
+        viewManagerModel.setActiveView(recipeListViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }

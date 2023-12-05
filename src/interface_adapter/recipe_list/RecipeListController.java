@@ -1,6 +1,8 @@
 package interface_adapter.recipe_list;
 
+import entity.Recipe;
 import use_case.recipe_list.RecipeListInputBoundary;
+import use_case.recipe_list.RecipeListInputData;
 
 public class RecipeListController {
 
@@ -18,7 +20,9 @@ public class RecipeListController {
         recipeListInteractor.goBack();
     }
 
-    public void displayComment(){
-        return;
+    public void displayComment(Recipe recipe){
+        RecipeListInputData recipeListInputData = new RecipeListInputData(recipe);
+
+        recipeListInteractor.loadComment(recipeListInputData);
     }
 }

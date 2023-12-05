@@ -2,12 +2,14 @@ package view;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.Recipe;
 import entity.SearchResult;
 import interface_adapter.comment.CommentController;
 import interface_adapter.recipe_list.RecipeListController;
 import interface_adapter.recipe_list.RecipeListViewModel;
 import interface_adapter.search_form.SearchFormState;
 import org.json.JSONObject;
+import use_case.recipe_list.RecipeListInputData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,13 +65,35 @@ public class RecipeListView extends JPanel implements PropertyChangeListener {
         );
 
         commentButton.addActionListener(
-                e -> {
+                event -> {
                     System.out.println("Button Comment is pressed");
                     List<String> selectedValuesList = recipeList.getSelectedValuesList();
                     if (selectedValuesList.size() > 0) {
                         // Get the selection
                         // TODO: Add features here
-                        recipeListController.displayComment();
+                        SearchFormState state = recipeListViewModel.getState();
+                        JSONObject data = state.getSearchResult();
+
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        try {
+                            // From Chatgpt: Use Jackson to parse JSON into Java Class
+                            SearchResult searchResult = objectMapper.readValue(data.toString(), SearchResult.class);
+                            System.out.println("searchResult: " + searchResult);
+
+                            // Find the selected recipe that match the selectedValuesList.get(0)
+                            String selectedRecipeTitle = selectedValuesList.get(0);
+                            Recipe selectedRecipe = searchResult
+                                    .getHits()
+                                    .stream()
+                                    .filter(hit -> hit.getRecipe().getLabel().equals(selectedRecipeTitle))
+                                    .findFirst()
+                                    .get().getRecipe();
+                            System.out.println("Selected recipe is " + selectedRecipe.getLabel());
+
+                            recipeListController.displayComment(selectedRecipe);
+                        } catch (JsonProcessingException e) {
+                            throw new RuntimeException(e);
+                        }
                     }else{
                         JOptionPane.showMessageDialog(this, "You did not select anything.");
                     }
@@ -103,7 +127,6 @@ public class RecipeListView extends JPanel implements PropertyChangeListener {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 //    public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package app;
 
+import data_access.CommentFileDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.comment.CommentViewModel;
 import interface_adapter.recipe_list.RecipeListController;
@@ -14,15 +15,15 @@ public class RecipeListUseCaseFactory {
     private RecipeListUseCaseFactory() {
     }
 
-    public static RecipeListView createRecipeView(ViewManagerModel viewManagerModel, RecipeListViewModel recipeListViewModel, CommentViewModel commentViewModel) {
-        RecipeListController recipeListController = createRecipeListController(viewManagerModel, recipeListViewModel, commentViewModel);
+    public static RecipeListView createRecipeView(ViewManagerModel viewManagerModel, RecipeListViewModel recipeListViewModel, CommentViewModel commentViewModel, CommentFileDataAccessObject commentFileDataAccessObject) {
+        RecipeListController recipeListController = createRecipeListController(viewManagerModel, recipeListViewModel, commentViewModel,commentFileDataAccessObject);
 
         return new RecipeListView(recipeListController, recipeListViewModel);
     }
 
-    public static RecipeListController createRecipeListController(ViewManagerModel viewManagerModel, RecipeListViewModel recipeListViewModel, CommentViewModel commentViewModel) {
+    public static RecipeListController createRecipeListController(ViewManagerModel viewManagerModel, RecipeListViewModel recipeListViewModel, CommentViewModel commentViewModel, CommentFileDataAccessObject commentFileDataAccessObject) {
         RecipeListOutputBoundary recipeListOutputBoundary = new RecipeListPresenter(viewManagerModel, commentViewModel);
-        RecipeListInputBoundary recipeListInputBoundary = new RecipeListInteractor(recipeListOutputBoundary);
+        RecipeListInputBoundary recipeListInputBoundary = new RecipeListInteractor(recipeListOutputBoundary, commentFileDataAccessObject);
 
         return new RecipeListController(recipeListInputBoundary);
     }
