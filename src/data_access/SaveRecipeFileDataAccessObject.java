@@ -1,36 +1,73 @@
 package data_access;
 
+import entity.Comment.Comments;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class SaveRecipeFileDataAccessObject {
-    private final String filePath;
+    private final File csvFile;
+    private final Map<String, Integer> headers = new LinkedHashMap<>();
+    private final Map<String, String> userRecipeMap = new HashMap<>();
 
-    public SaveRecipeFileDataAccessObject(String filePath) {
-        this.filePath = filePath;
-        initializeFile();
+    public SaveRecipeFileDataAccessObject(String csvPath) throws IOException {
+        csvFile = new File(csvPath);
+        headers.put("username", 0);
+        headers.put("recipeId", 1);
+
+        if (csvFile.length() == 0){
+            save();
+        } else {
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+                String header = reader.readLine();
+
+                // For later: clean this up by creating a new Exception subclass and handling it in the UI.
+                assert header.equals("username,recipeId");
+                String row;
+                while ((row = reader.readLine()) != null) {
+                    String[] col = row.split(",");
+                    String username = String.valueOf(col[headers.get("id")]);
+                    String recipeId = String.valueOf(col[headers.get("recipeId")]);
+                    userRecipeMap.put(username, recipeId);
+                }
+            }
+        }
+
     }
 
-    private void initializeFile() {
+
+    private void save() {
+        BufferedWriter writer;
         try {
-            File file = new File(filePath);
-            if (!file.exists()) {
-                file.createNewFile();
+            writer = new BufferedWriter(new FileWriter(csvFile));
+            writer.write(String.join(",", headers.keySet()));
+            writer.newLine();
+
+            for (Map.Entry<String, String> entry : userRecipeMap.entrySet()) {
+                String line = String.format("%s,%s",
+                        entry.getKey(), entry.getValue());
+                writer.write(line);
+                writer.newLine();
             }
+
+            writer.close();
+
         } catch (IOException e) {
-            throw new RuntimeException("Error initializing save recipe file.", e);
+            throw new RuntimeException(e);
         }
     }
 
-    public List<String> getSavedRecipesForUser(String userId) {
+    public List<String> getSavedRecipesForUser(String username) {
         List<String> savedRecipes = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 2 && parts[0].equals(userId)) {
-                    savedRecipes.add(parts[1]);
+                if (parts.length == 2 && parts[headers.get("username")].equals(username)) {
+                    savedRecipes.add(parts[headers.get("recipeId")]);
                 }
             }
         } catch (IOException e) {
@@ -39,28 +76,8 @@ public class SaveRecipeFileDataAccessObject {
         return savedRecipes;
     }
 
-    public void saveRecipeForUser(String userId, String recipeId) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-            writer.write(userId + "," + recipeId);
-            writer.newLine();
-            writer.flush();
-        } catch (IOException e) {
-            throw new RuntimeException("Error saving recipe for user.", e);
-        }
-    }
-
-    public void save() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            // Optionally, you can add headers if needed
-            // writer.write("user_id,recipe_id");
-            // writer.newLine();
-
-            // Iterate over saved recipes and write to the file
-            // Example: for (SavedRecipe savedRecipe : savedRecipes) { ... }
-
-            writer.flush();
-        } catch (IOException e) {
-            throw new RuntimeException("Error saving data to file.", e);
-        }
+    public void saveRecipeForUser(String username, String recipeId) {
+        userRecipeMap.put(username, recipeId);
+        save(); // Save the updated map to the file
     }
 }
