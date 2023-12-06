@@ -89,7 +89,7 @@ public class Main {
 
 
 
-        viewManagerModel.setActiveView(searchFormView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
