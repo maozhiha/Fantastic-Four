@@ -1,9 +1,11 @@
 package view;
 
 import entity.Recipe;
+import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.recipe_detail.RecipeDetailController;
 import interface_adapter.recipe_detail.RecipeDetailState;
 import interface_adapter.recipe_detail.RecipeDetailViewModel;
+import interface_adapter.save_recipe.SaveRecipeController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,14 +20,16 @@ public class RecipeDetailView extends JPanel implements PropertyChangeListener {
 
     private final RecipeDetailController recipeDetailController;
     private final RecipeDetailViewModel recipeDetailViewModel;
+    private final SaveRecipeController saveRecipeController;
 
 
     private JLabel recipeTitle;
 
     private JTextPane recipeDetailPane;
 
-    public RecipeDetailView(RecipeDetailController recipeDetailController, RecipeDetailViewModel recipeDetailViewModel) {
+    public RecipeDetailView(RecipeDetailController recipeDetailController, RecipeDetailViewModel recipeDetailViewModel, SaveRecipeController saveRecipeController) {
         this.recipeDetailController = recipeDetailController;
+        this.saveRecipeController = saveRecipeController;
         this.recipeDetailViewModel = recipeDetailViewModel;
         this.recipeDetailViewModel.addPropertyChangeListener(this);
 
@@ -45,8 +49,10 @@ public class RecipeDetailView extends JPanel implements PropertyChangeListener {
         JPanel buttons = new JPanel();
         JButton comment = new JButton("Comment");
         JButton backButton = new JButton("Back");
+        JButton saveButton = new JButton("Save");
         buttons.add(comment);
         buttons.add(backButton);
+        buttons.add(saveButton);
         this.add(buttons, BorderLayout.SOUTH);
 
         comment.addActionListener(
@@ -63,6 +69,28 @@ public class RecipeDetailView extends JPanel implements PropertyChangeListener {
                     recipeDetailController.goBackToRecipeListView();
                 }
         );
+
+        saveButton.addActionListener(
+                actionEvent -> {
+                    RecipeDetailState state = recipeDetailViewModel.getState();
+                    Recipe recipe = state.getRecipe();
+                    LoggedInState loggedInState = new LoggedInState();
+                    String recipeId = recipe.getId();
+                    String username = loggedInState.getUsername();
+
+                    boolean userConfirmed = showConfirmationDialog("Do you want to save this recipe?");
+                    if (userConfirmed){
+                        saveRecipeController.saveRecipe(username, recipeId);
+                        JOptionPane.showMessageDialog(null, "Recipe saved successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
+                }
+        );
+    }
+
+    private boolean showConfirmationDialog(String message){
+        int confirmation = JOptionPane.showConfirmDialog(null, message, "Save Confirmation", JOptionPane.YES_NO_OPTION);
+        return confirmation == JOptionPane.YES_OPTION;
     }
 
     @Override
