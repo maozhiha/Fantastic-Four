@@ -1,20 +1,23 @@
-package interface_adapter.recipe_list;
+package interface_adapter.recipe_detail;
 
 import interface_adapter.ViewModel;
-import interface_adapter.search_form.SearchFormState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class RecipeListViewModel extends ViewModel {
+public class RecipeDetailViewModel extends ViewModel {
 
-    private SearchFormState state;
+    private RecipeDetailState state = new RecipeDetailState();
 
-    public SearchFormState getState() {
+    public RecipeDetailViewModel() {
+        super("Recipe Detail View");
+    }
+
+    public RecipeDetailState getState() {
         return state;
     }
 
-    public void setState(SearchFormState state) {
+    public void setState(RecipeDetailState state) {
         this.state = state;
     }
 
@@ -28,9 +31,5 @@ public class RecipeListViewModel extends ViewModel {
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
-    }
-
-    public RecipeListViewModel() {
-        super("Recipe List View");
     }
 }

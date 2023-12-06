@@ -20,9 +20,9 @@ public class RecipeListController {
         recipeListInteractor.goBack();
     }
 
-    public void displayComment(Recipe recipe){
+    public void displayRecipeDetail(Recipe recipe) {
         RecipeListInputData recipeListInputData = new RecipeListInputData(recipe);
 
-        recipeListInteractor.loadComment(recipeListInputData);
+        recipeListInteractor.displayRecipe(recipeListInputData);
     }
 }

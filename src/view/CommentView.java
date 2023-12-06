@@ -46,7 +46,7 @@ public class CommentView extends JPanel implements PropertyChangeListener {
         this.add(commentViewAndEditPanel, BorderLayout.CENTER);
 
         JPanel buttons = new JPanel();
-        JButton comment = new JButton("Comment");
+        JButton comment = new JButton("Write a Comment!");
         JButton backButton = new JButton("Back");
         buttons.add(comment);
         buttons.add(backButton);
@@ -61,7 +61,7 @@ public class CommentView extends JPanel implements PropertyChangeListener {
         });
 
         backButton.addActionListener(actionEvent -> {
-            commentController.goBackToRecipeList();
+            commentController.goBackToRecipeDetail();
         });
     }
 

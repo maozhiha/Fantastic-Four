@@ -33,7 +33,7 @@ public class CommentInteractor implements CommentInputBoundary{
     }
 
     @Override
-    public void goBackToRecipeList() {
-        commentPresenter.goBackToRecipeList();
+    public void goBackToRecipeDetail() {
+        commentPresenter.goBackToRecipeDetail();
     }
 }

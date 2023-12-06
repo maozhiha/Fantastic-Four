@@ -21,21 +21,17 @@ public class RecipeListInteractor implements RecipeListInputBoundary{
     }
 
     @Override
-    public void loadComment(RecipeListInputData recipeListInputData) {
-        // Get recipe from recipeListInputData
-        // Use DAO to get comment for recipe
-        // Prepare comment in recipeListOutputData
-        // notify presentator to display comment with outputdata
+    public void displayRecipe(RecipeListInputData recipeListInputData) {
         System.out.println("RecipeListInteractor: loadComment");
         Recipe recipe = recipeListInputData.getRecipe();
         String recipeId = recipe.getId();
 
         if(commentFileDataAccessObject.existsById(recipeId)) {
             Comments comments = commentFileDataAccessObject.findById(recipeId);
-            recipeListPresentator.displayComment(new RecipeListOutputData(recipe.getLabel(), recipe.getId(), comments ));
+            recipeListPresentator.displayRecipeDetail(new RecipeListOutputData(recipe,recipe.getLabel(), recipe.getId(), comments ));
         }else{
             Comments comments = CommentsFactory.createNewComments(recipeId, recipe.getLabel());
-            recipeListPresentator.displayComment(new RecipeListOutputData(recipe.getLabel(), recipe.getId(), comments));
+            recipeListPresentator.displayRecipeDetail(new RecipeListOutputData(recipe,recipe.getLabel(), recipe.getId(), comments));
         }
     }
 }

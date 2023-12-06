@@ -4,5 +4,5 @@ public interface RecipeListInputBoundary {
 
     void goBack();
 
-    void loadComment(RecipeListInputData recipeListInputData);
+    void displayRecipe(RecipeListInputData recipeListInputData);
 }

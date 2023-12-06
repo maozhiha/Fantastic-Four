@@ -34,6 +34,7 @@ public class Main {
         WelcomeUserViewModel welcomeUserViewModel = new WelcomeUserViewModel();
         SearchFormViewModel searchFormViewModel = new SearchFormViewModel();
         RecipeListViewModel recipeListViewModel = new RecipeListViewModel();
+        interface_adapter.recipe_detail.RecipeDetailViewModel recipeDetailViewModel = new interface_adapter.recipe_detail.RecipeDetailViewModel();
         CommentViewModel commentViewModel = new CommentViewModel();
 
         CommentFileDataAccessObject commentDataAccessObject;
@@ -46,13 +47,17 @@ public class Main {
         //
         ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
         SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel, recipeListViewModel);
-        RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel, commentViewModel, commentDataAccessObject);
-        CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeListViewModel, commentViewModel, commentDataAccessObject);
+        RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel,recipeDetailViewModel, commentDataAccessObject);
+        RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.createRecipeDetailView(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
+        CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
+
 
         views.add(exampleView, exampleView.viewName);
         views.add(searchFormView, searchFormView.viewName);
         views.add(recipeListView, recipeListView.viewName);
+        views.add(recipeDetailView, recipeDetailView.viewName);
         views.add(commentView, commentView.viewName);
+
 
         viewManagerModel.setActiveView(searchFormView.viewName);
         viewManagerModel.firePropertyChanged();

@@ -1,8 +1,8 @@
 package interface_adapter.comment;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.recipe_detail.RecipeDetailViewModel;
 import interface_adapter.recipe_list.RecipeListViewModel;
-import interface_adapter.search_form.SearchFormViewModel;
 import use_case.comment.CommentOutputBoundary;
 import use_case.comment.CommentOutputData;
 
@@ -10,12 +10,12 @@ public class CommentPresenter implements CommentOutputBoundary {
 
     private final ViewManagerModel viewManagerModel;
 
-    private final RecipeListViewModel recipeListViewModel;
+    private final RecipeDetailViewModel recipeDetailViewModel;
     private final CommentViewModel commentViewModel;
 
-    public CommentPresenter(ViewManagerModel viewManagerModel, RecipeListViewModel recipeListViewModel, CommentViewModel commentViewModel) {
+    public CommentPresenter(ViewManagerModel viewManagerModel, RecipeDetailViewModel recipeDetailViewModel, CommentViewModel commentViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.recipeListViewModel = recipeListViewModel;
+        this.recipeDetailViewModel = recipeDetailViewModel;
         this.commentViewModel = commentViewModel;
     }
 
@@ -31,8 +31,8 @@ public class CommentPresenter implements CommentOutputBoundary {
     }
 
     @Override
-    public void goBackToRecipeList() {
-        viewManagerModel.setActiveView(recipeListViewModel.getViewName());
+    public void goBackToRecipeDetail() {
+        viewManagerModel.setActiveView(recipeDetailViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

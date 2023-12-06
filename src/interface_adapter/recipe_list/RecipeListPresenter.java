@@ -3,6 +3,8 @@ package interface_adapter.recipe_list;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.comment.CommentState;
 import interface_adapter.comment.CommentViewModel;
+import interface_adapter.recipe_detail.RecipeDetailState;
+import interface_adapter.recipe_detail.RecipeDetailViewModel;
 import use_case.recipe_list.RecipeListOutputBoundary;
 import use_case.recipe_list.RecipeListOutputData;
 import view.SearchFormView;
@@ -11,11 +13,12 @@ public class RecipeListPresenter implements RecipeListOutputBoundary {
 
     private final ViewManagerModel viewManagerModel;
 
-    private final CommentViewModel commentViewModel;
 
-    public RecipeListPresenter(ViewManagerModel viewManagerModel, CommentViewModel commentViewModel) {
+    private final RecipeDetailViewModel recipeDetailViewModel;
+
+    public RecipeListPresenter(ViewManagerModel viewManagerModel, RecipeDetailViewModel recipeDetailViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.commentViewModel = commentViewModel;
+        this.recipeDetailViewModel = recipeDetailViewModel;
     }
 
     public void goBackToSearchForm() {
@@ -23,15 +26,16 @@ public class RecipeListPresenter implements RecipeListOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+
     @Override
-    public void displayComment(RecipeListOutputData recipeListOutputData) {
-        CommentState state = commentViewModel.getState();
-        state.setComments(recipeListOutputData.getComments());
+    public void displayRecipeDetail(RecipeListOutputData recipeListOutputData) {
+        RecipeDetailState state = recipeDetailViewModel.getState();
+        state.setRecipe(recipeListOutputData.getRecipe());
 
-        commentViewModel.setState(state);
-        commentViewModel.firePropertyChanged();
+        recipeDetailViewModel.setState(state);
+        recipeDetailViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(commentViewModel.getViewName());
+        viewManagerModel.setActiveView(recipeDetailViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

@@ -4,12 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Recipe;
 import entity.SearchResult;
-import interface_adapter.comment.CommentController;
 import interface_adapter.recipe_list.RecipeListController;
 import interface_adapter.recipe_list.RecipeListViewModel;
 import interface_adapter.search_form.SearchFormState;
 import org.json.JSONObject;
-import use_case.recipe_list.RecipeListInputData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,32 +43,17 @@ public class RecipeListView extends JPanel implements PropertyChangeListener {
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout(FlowLayout.CENTER));
         JButton viewRecipeButton = new JButton("View Recipe");
-        JButton commentButton = new JButton("Comment");
         JButton backButton = new JButton("Back");
         buttons.add(viewRecipeButton);
-        buttons.add(commentButton);
         buttons.add(backButton);
 
         this.add(buttons, BorderLayout.SOUTH);
         viewRecipeButton.addActionListener(
-                e -> {
+                actionEvent -> {
                     System.out.println("Button View Recipe is pressed");
                     List<String> selectedValuesList = recipeList.getSelectedValuesList();
                     if (selectedValuesList.size() > 0) {
                         // Get the selection
-                    }else{
-                        JOptionPane.showMessageDialog(this, "You did not select anything.");
-                    }
-                }
-        );
-
-        commentButton.addActionListener(
-                event -> {
-                    System.out.println("Button Comment is pressed");
-                    List<String> selectedValuesList = recipeList.getSelectedValuesList();
-                    if (selectedValuesList.size() > 0) {
-                        // Get the selection
-                        // TODO: Add features here
                         SearchFormState state = recipeListViewModel.getState();
                         JSONObject data = state.getSearchResult();
 
@@ -78,7 +61,6 @@ public class RecipeListView extends JPanel implements PropertyChangeListener {
                         try {
                             // From Chatgpt: Use Jackson to parse JSON into Java Class
                             SearchResult searchResult = objectMapper.readValue(data.toString(), SearchResult.class);
-                            System.out.println("searchResult: " + searchResult);
 
                             // Find the selected recipe that match the selectedValuesList.get(0)
                             String selectedRecipeTitle = selectedValuesList.get(0);
@@ -88,9 +70,8 @@ public class RecipeListView extends JPanel implements PropertyChangeListener {
                                     .filter(hit -> hit.getRecipe().getLabel().equals(selectedRecipeTitle))
                                     .findFirst()
                                     .get().getRecipe();
-                            System.out.println("Selected recipe is " + selectedRecipe.getLabel());
 
-                            recipeListController.displayComment(selectedRecipe);
+                            recipeListController.displayRecipeDetail(selectedRecipe);
                         } catch (JsonProcessingException e) {
                             throw new RuntimeException(e);
                         }

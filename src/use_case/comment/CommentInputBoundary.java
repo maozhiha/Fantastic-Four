@@ -5,5 +5,5 @@ public interface CommentInputBoundary {
 
     void addNewComment(CommentInputData commentInputData);
 
-    void goBackToRecipeList();
+    void goBackToRecipeDetail();
 }

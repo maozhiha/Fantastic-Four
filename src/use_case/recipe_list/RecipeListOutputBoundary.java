@@ -4,5 +4,6 @@ public interface RecipeListOutputBoundary {
 
     void goBackToSearchForm();
 
-    void displayComment(RecipeListOutputData recipeListOutputData);
+
+    void displayRecipeDetail(RecipeListOutputData recipeListOutputData);
 }

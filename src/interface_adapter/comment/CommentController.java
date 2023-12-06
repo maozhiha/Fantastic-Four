@@ -21,7 +21,7 @@ public class CommentController {
         commentInteractor.addNewComment(commentInputData);
     }
 
-    public void goBackToRecipeList() {
-        commentInteractor.goBackToRecipeList();
+    public void goBackToRecipeDetail() {
+        commentInteractor.goBackToRecipeDetail();
     }
 }
