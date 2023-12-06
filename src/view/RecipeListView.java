@@ -2,6 +2,7 @@ package view;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.Recipe;
 import entity.SearchResult;
 import interface_adapter.recipe_list.RecipeListController;
 import interface_adapter.recipe_list.RecipeListViewModel;
@@ -42,31 +43,38 @@ public class RecipeListView extends JPanel implements PropertyChangeListener {
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout(FlowLayout.CENTER));
         JButton viewRecipeButton = new JButton("View Recipe");
-        JButton commentButton = new JButton("Comment");
         JButton backButton = new JButton("Back");
         buttons.add(viewRecipeButton);
-        buttons.add(commentButton);
         buttons.add(backButton);
 
         this.add(buttons, BorderLayout.SOUTH);
         viewRecipeButton.addActionListener(
-                e -> {
+                actionEvent -> {
                     System.out.println("Button View Recipe is pressed");
                     List<String> selectedValuesList = recipeList.getSelectedValuesList();
                     if (selectedValuesList.size() > 0) {
                         // Get the selection
-                    }else{
-                        JOptionPane.showMessageDialog(this, "You did not select anything.");
-                    }
-                }
-        );
+                        SearchFormState state = recipeListViewModel.getState();
+                        JSONObject data = state.getSearchResult();
 
-        commentButton.addActionListener(
-                e -> {
-                    System.out.println("Button Comment is pressed");
-                    List<String> selectedValuesList = recipeList.getSelectedValuesList();
-                    if (selectedValuesList.size() > 0) {
-                        // Get the selection
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        try {
+                            // From Chatgpt: Use Jackson to parse JSON into Java Class
+                            SearchResult searchResult = objectMapper.readValue(data.toString(), SearchResult.class);
+
+                            // Find the selected recipe that match the selectedValuesList.get(0)
+                            String selectedRecipeTitle = selectedValuesList.get(0);
+                            Recipe selectedRecipe = searchResult
+                                    .getHits()
+                                    .stream()
+                                    .filter(hit -> hit.getRecipe().getLabel().equals(selectedRecipeTitle))
+                                    .findFirst()
+                                    .get().getRecipe();
+
+                            recipeListController.displayRecipeDetail(selectedRecipe);
+                        } catch (JsonProcessingException e) {
+                            throw new RuntimeException(e);
+                        }
                     }else{
                         JOptionPane.showMessageDialog(this, "You did not select anything.");
                     }
@@ -100,7 +108,6 @@ public class RecipeListView extends JPanel implements PropertyChangeListener {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 //    public static void main(String[] args) {
