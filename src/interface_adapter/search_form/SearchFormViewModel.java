@@ -7,6 +7,8 @@ import java.beans.PropertyChangeSupport;
 
 public class SearchFormViewModel extends ViewModel {
 
+    public final String viewName = "Search Form View";
+
     public static final String[] dietSelection = {"balanced",
             "high-fiber",
             "high-protein",
