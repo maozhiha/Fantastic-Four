@@ -86,7 +86,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                         if (evt.getSource().equals(signUp)) {
 //                            loginPresenter.setIsSignupSuccess(true);
 
-                            viewManagerModel.setActiveView(signupView.viewName); // Replace "signupView" with the actual key of the signup panel in the CardLayout
+                            LoginState currentState = loginViewModel.getState();
+                            loginController.signUp(
+                                    currentState.getUsername(),
+                                    currentState.getPassword()
+                            );
                         }
                     }
                 }
@@ -149,6 +153,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public void propertyChange(PropertyChangeEvent evt) {
         LoginState state = (LoginState) evt.getNewValue();
         setFields(state);
+        // Check if there is any error
+        if (state.getUsernameError() != null) {
+            JOptionPane.showMessageDialog(this, state.getUsernameError());
+        }
     }
 
     private void setFields(LoginState state) {

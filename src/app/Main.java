@@ -7,6 +7,7 @@ import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.comment.CommentViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.recipe_detail.RecipeDetailViewModel;
 import interface_adapter.recipe_list.RecipeListViewModel;
 import interface_adapter.search_form.SearchFormViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -44,7 +45,7 @@ public class Main {
 
         SearchFormViewModel searchFormViewModel = new SearchFormViewModel();
         RecipeListViewModel recipeListViewModel = new RecipeListViewModel();
-        interface_adapter.recipe_detail.RecipeDetailViewModel recipeDetailViewModel = new interface_adapter.recipe_detail.RecipeDetailViewModel();
+        RecipeDetailViewModel recipeDetailViewModel = new RecipeDetailViewModel();
         CommentViewModel commentViewModel = new CommentViewModel();
 
         CommentFileDataAccessObject commentDataAccessObject;
@@ -65,7 +66,7 @@ public class Main {
         SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel, recipeListViewModel);
         RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel,recipeDetailViewModel, commentDataAccessObject);
         RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.createRecipeDetailView(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
-        CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
+        CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeDetailViewModel, commentViewModel, loggedInViewModel,  commentDataAccessObject);
         SignupView signupView = SignupUseCaseFactory.create(clearViewModel, viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
@@ -73,7 +74,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel, signupView );
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.createLoggedInView(viewManagerModel, loginViewModel, loggedInViewModel, searchFormViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
 
