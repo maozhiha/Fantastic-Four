@@ -5,6 +5,8 @@ import entity.Comment.Comments;
 import interface_adapter.comment.CommentController;
 import interface_adapter.comment.CommentState;
 import interface_adapter.comment.CommentViewModel;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
 
 import java.util.List;
 import javax.swing.*;
@@ -20,12 +22,15 @@ public class CommentView extends JPanel implements PropertyChangeListener {
     private final CommentController commentController;
     private final CommentViewModel commentViewModel;
 
+    private final LoggedInViewModel loggedInViewModel;
+
 
     private JTextPane commentPane;
 
-    public CommentView(CommentController commentController, CommentViewModel commentViewModel) {
+    public CommentView(CommentController commentController, CommentViewModel commentViewModel, LoggedInViewModel loggedInViewModel) {
         this.commentController = commentController;
         this.commentViewModel = commentViewModel;
+        this.loggedInViewModel = loggedInViewModel;
         this.commentViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Comment");
@@ -54,9 +59,11 @@ public class CommentView extends JPanel implements PropertyChangeListener {
         this.add(buttons, BorderLayout.SOUTH);
 
         comment.addActionListener(actionEvent -> {
+            LoggedInState loggedInState = loggedInViewModel.getState();
+            String user = loggedInState.getUsername();
             String commentText = commentEditorField.getText();
             CommentState commentState = commentViewModel.getState();
-            commentController.addNewComment(commentState.getComments(), "SAM_SMITH", commentText);
+            commentController.addNewComment(commentState.getComments(), user, commentText);
             commentEditorField.setText("");
         });
 

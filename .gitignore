@@ -25,3 +25,5 @@ replay_pid*
 
 # comments
 comments.csv
+saved_recipes.csv
+users.csv
