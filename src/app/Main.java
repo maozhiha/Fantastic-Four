@@ -76,22 +76,22 @@ public class Main {
         SaveRecipeController saveRecipeController = new SaveRecipeController(saveRecipeInputBoundary);
 
         //
-        ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
+        //ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
         SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel, recipeListViewModel);
         RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel,recipeDetailViewModel, commentDataAccessObject);
-        RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.createRecipeDetailView(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
+        //RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.createRecipeDetailView(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
         CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeDetailViewModel, commentViewModel, loggedInViewModel,  commentDataAccessObject);
         SignupView signupView = SignupUseCaseFactory.create(clearViewModel, viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
         RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.createRecipeDetailView(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject, saveRecipeController);
-        CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
+        //CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel, signupView );
         views.add(loginView, loginView.viewName);
 
 
-        views.add(exampleView, exampleView.viewName);
+        //views.add(exampleView, exampleView.viewName);
         LoggedInView loggedInView = LoggedInUseCaseFactory.createLoggedInView(viewManagerModel, loginViewModel, loggedInViewModel, searchFormViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
