@@ -29,7 +29,7 @@ public class SaveRecipeFileDataAccessObject {
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
-                    String username = String.valueOf(col[headers.get("id")]);
+                    String username = String.valueOf(col[headers.get("username")]);
                     String recipeId = String.valueOf(col[headers.get("recipeId")]);
                     userRecipeMap.put(username, recipeId);
                 }

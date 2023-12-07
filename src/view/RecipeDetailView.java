@@ -2,6 +2,7 @@ package view;
 
 import entity.Recipe;
 import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.recipe_detail.RecipeDetailController;
 import interface_adapter.recipe_detail.RecipeDetailState;
 import interface_adapter.recipe_detail.RecipeDetailViewModel;
@@ -17,9 +18,9 @@ public class RecipeDetailView extends JPanel implements PropertyChangeListener {
 
     public final String viewName = "Recipe Detail View";
 
-
     private final RecipeDetailController recipeDetailController;
     private final RecipeDetailViewModel recipeDetailViewModel;
+    private final LoggedInViewModel loggedInViewModel;
     private final SaveRecipeController saveRecipeController;
 
 
@@ -27,10 +28,11 @@ public class RecipeDetailView extends JPanel implements PropertyChangeListener {
 
     private JTextPane recipeDetailPane;
 
-    public RecipeDetailView(RecipeDetailController recipeDetailController, RecipeDetailViewModel recipeDetailViewModel, SaveRecipeController saveRecipeController) {
+    public RecipeDetailView(RecipeDetailController recipeDetailController, RecipeDetailViewModel recipeDetailViewModel, SaveRecipeController saveRecipeController, LoggedInViewModel loggedInViewModel) {
         this.recipeDetailController = recipeDetailController;
         this.saveRecipeController = saveRecipeController;
         this.recipeDetailViewModel = recipeDetailViewModel;
+        this.loggedInViewModel = loggedInViewModel;
         this.recipeDetailViewModel.addPropertyChangeListener(this);
 
         this.setLayout(new BorderLayout());
@@ -74,13 +76,13 @@ public class RecipeDetailView extends JPanel implements PropertyChangeListener {
                 actionEvent -> {
                     RecipeDetailState state = recipeDetailViewModel.getState();
                     Recipe recipe = state.getRecipe();
-                    LoggedInState loggedInState = new LoggedInState();
                     String recipeId = recipe.getId();
-                    String username = loggedInState.getUsername();
+                    LoggedInState loggedInState = loggedInViewModel.getState();
+                    String userName = loggedInState.getUsername();
 
                     boolean userConfirmed = showConfirmationDialog("Do you want to save this recipe?");
                     if (userConfirmed){
-                        saveRecipeController.saveRecipe(username, recipeId);
+                        saveRecipeController.saveRecipe(userName, recipeId);
                         JOptionPane.showMessageDialog(null, "Recipe saved successfully!", "Information", JOptionPane.INFORMATION_MESSAGE);
                     }
 
@@ -95,6 +97,7 @@ public class RecipeDetailView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+
         RecipeDetailState state = (RecipeDetailState) propertyChangeEvent.getNewValue();
         Recipe recipe = state.getRecipe();
 
@@ -106,8 +109,8 @@ public class RecipeDetailView extends JPanel implements PropertyChangeListener {
             sb.append(ingredientLine);
             sb.append("\n");
         }
-
         recipeDetailPane.setText(sb.toString());
         recipeTitle.setText(recipe.getLabel());
+
     }
 }
