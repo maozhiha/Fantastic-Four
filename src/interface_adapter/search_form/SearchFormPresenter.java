@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.recipe_list.RecipeListViewModel;
 import use_case.search.SearchFormOutputBoundary;
 import use_case.search.SearchFormOutputData;
+import interface_adapter.logged_in.LoggedInViewModel;
 
 public class SearchFormPresenter implements SearchFormOutputBoundary {
 
@@ -14,12 +15,14 @@ public class SearchFormPresenter implements SearchFormOutputBoundary {
     private final SearchFormViewModel searchFormViewModel;
 
     private final RecipeListViewModel recipeListViewModel;
+    private final LoggedInViewModel loggedInViewModel;
 
 
-    public SearchFormPresenter(ViewManagerModel viewManagerModel, SearchFormViewModel searchFormViewModel, RecipeListViewModel recipeListViewModel) {
+    public SearchFormPresenter(ViewManagerModel viewManagerModel, SearchFormViewModel searchFormViewModel, RecipeListViewModel recipeListViewModel, LoggedInViewModel loggedInViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.searchFormViewModel = searchFormViewModel;
         this.recipeListViewModel = recipeListViewModel;
+        this.loggedInViewModel = loggedInViewModel;
     }
 
     @Override
@@ -41,5 +44,9 @@ public class SearchFormPresenter implements SearchFormOutputBoundary {
     @Override
     public void prepareErrorView(String errorMessage) {
         System.out.println("No result from SearchFormInteractor");
+    }
+    public void goBackToLoggedInView() {
+        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }

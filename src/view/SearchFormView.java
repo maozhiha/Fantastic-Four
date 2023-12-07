@@ -91,7 +91,11 @@ public class SearchFormView extends JPanel {
         cuisineTypePanel.add(cuisineTypeScrollPane);
 
         // Row 10
+        JPanel buttons = new JPanel();
         JButton searchButton = new JButton("Search");
+        JButton backButton = new JButton("Back");
+        buttons.add(searchButton);
+        buttons.add(backButton);
 
         searchButton.addActionListener(
                 new ActionListener() {
@@ -131,6 +135,10 @@ public class SearchFormView extends JPanel {
                 }
         );
 
+        backButton.addActionListener(actionEvent -> {
+            searchFormController.goBackToLoggedInView();
+        });
+
 
         this.add(innerPanel);
         this.add(prompt);
@@ -141,7 +149,7 @@ public class SearchFormView extends JPanel {
         this.add(mealTypePanel);
         this.add(dishTypePanel);
         this.add(cuisineTypePanel);
-        this.add(searchButton);
+        this.add(buttons);
     }
 
     private String formatSelectedValuesList(JList<String> list) {
