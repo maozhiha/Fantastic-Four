@@ -18,13 +18,6 @@ public class RecipeListOutputData {
     String id;
     Comments comments;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getId() {
-        return id;
-    }
 
     public Comments getComments() {
         return comments;
@@ -34,7 +27,4 @@ public class RecipeListOutputData {
         return recipe;
     }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
 }
