@@ -1,5 +1,6 @@
 package use_case.saved_recipes;
 
+import entity.Recipe;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
