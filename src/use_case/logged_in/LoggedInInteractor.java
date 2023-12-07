@@ -17,4 +17,5 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
     public void goToSearch() {
         loggedInPresenter.goToSearch();
     }
+    public void goToSavedRecipes(){loggedInPresenter.goToSavedRecipes();}
 }
