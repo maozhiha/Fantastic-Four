@@ -16,7 +16,6 @@ public class SaveRecipeInteractor implements SaveRecipeInputBoundary {
             saveRecipeFileDataAccessObject.saveRecipeForUser(userId, recipeId);
         }
         catch (Exception e){
-            e.printStackTrace();
             System.out.println("error in saving recipes");
         }
     }

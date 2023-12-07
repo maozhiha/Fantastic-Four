@@ -14,7 +14,6 @@ import interface_adapter.save_recipe.SaveRecipeController;
 import interface_adapter.saved_recipes.SavedRecipesViewModel;
 import interface_adapter.search_form.SearchFormViewModel;
 import interface_adapter.signup.SignupViewModel;
-import interface_adapter.weclome_user.WelcomeUserViewModel;
 import use_case.save_recipe.SaveRecipeInputBoundary;
 import use_case.save_recipe.SaveRecipeInteractor;
 import view.*;
