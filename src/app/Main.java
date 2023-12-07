@@ -77,7 +77,7 @@ public class Main {
 
         //
         //ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
-        SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel, recipeListViewModel);
+        SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel, recipeListViewModel, loggedInViewModel);
         RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel,recipeDetailViewModel, commentDataAccessObject);
         //RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.createRecipeDetailView(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
         CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeDetailViewModel, commentViewModel, loggedInViewModel,  commentDataAccessObject);

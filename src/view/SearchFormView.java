@@ -1,15 +1,22 @@
 package view;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.SearchResult;
 import interface_adapter.search_form.SearchFormController;
 import interface_adapter.search_form.SearchFormState;
 import interface_adapter.search_form.SearchFormViewModel;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
 
-public class SearchFormView extends JPanel {
+public class SearchFormView extends JPanel implements PropertyChangeListener {
 
     public static final String viewName = "Search Form View";
     private final SearchFormViewModel searchFormViewModel;
@@ -18,6 +25,7 @@ public class SearchFormView extends JPanel {
     public SearchFormView(SearchFormViewModel searchFormViewModel, SearchFormController searchFormController) {
         this.searchFormViewModel = searchFormViewModel;
         this.searchFormController = searchFormController;
+        this.searchFormViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Search Receipe by keywords and ingredients");
 
@@ -91,7 +99,11 @@ public class SearchFormView extends JPanel {
         cuisineTypePanel.add(cuisineTypeScrollPane);
 
         // Row 10
+        JPanel buttons = new JPanel();
         JButton searchButton = new JButton("Search");
+        JButton backButton = new JButton("Back");
+        buttons.add(searchButton);
+        buttons.add(backButton);
 
         searchButton.addActionListener(
                 new ActionListener() {
@@ -131,6 +143,10 @@ public class SearchFormView extends JPanel {
                 }
         );
 
+        backButton.addActionListener(actionEvent -> {
+            searchFormController.goBackToLoggedInView();
+        });
+
 
         this.add(innerPanel);
         this.add(prompt);
@@ -141,7 +157,7 @@ public class SearchFormView extends JPanel {
         this.add(mealTypePanel);
         this.add(dishTypePanel);
         this.add(cuisineTypePanel);
-        this.add(searchButton);
+        this.add(buttons);
     }
 
     private String formatSelectedValuesList(JList<String> list) {
@@ -150,6 +166,15 @@ public class SearchFormView extends JPanel {
             return "";
         } else {
             return selectedString.substring(1, selectedString.length() - 1);
+        }
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+        SearchFormState state = searchFormViewModel.getState();
+        System.out.println(state.isSearchResultEmpty());
+        if (state.isSearchResultEmpty()) {
+            JOptionPane.showMessageDialog(this, "No result found.");
         }
     }
 }
