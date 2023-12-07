@@ -1,6 +1,7 @@
 package app;
 import data_access.FileUserDataAccessObject;
 import data_access.CommentFileDataAccessObject;
+import data_access.SaveRecipeFileDataAccessObject;
 import entity.CommonUserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.clear_users.ClearViewModel;
@@ -9,9 +10,12 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.recipe_detail.RecipeDetailViewModel;
 import interface_adapter.recipe_list.RecipeListViewModel;
+import interface_adapter.save_recipe.SaveRecipeController;
 import interface_adapter.search_form.SearchFormViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.weclome_user.WelcomeUserViewModel;
+import use_case.save_recipe.SaveRecipeInputBoundary;
+import use_case.save_recipe.SaveRecipeInteractor;
 import view.*;
 
 import javax.swing.*;
@@ -49,6 +53,7 @@ public class Main {
         CommentViewModel commentViewModel = new CommentViewModel();
 
         CommentFileDataAccessObject commentDataAccessObject;
+        SaveRecipeFileDataAccessObject saveRecipeFileDataAccessObject;
         try {
             commentDataAccessObject = new CommentFileDataAccessObject("./comments.csv");
         } catch (IOException e) {
@@ -61,19 +66,32 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        try {
+            saveRecipeFileDataAccessObject = new SaveRecipeFileDataAccessObject("./saved_recipes.csv");
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+
+        SaveRecipeInputBoundary saveRecipeInputBoundary = new SaveRecipeInteractor(saveRecipeFileDataAccessObject);
+        SaveRecipeController saveRecipeController = new SaveRecipeController(saveRecipeInputBoundary);
+
         //
-//        ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
+        //ExampleView exampleView = WelcomeUserUseCaseFactory.create(welcomeUserViewModel);
         SearchFormView searchFormView = SearchFormUseCaseFactory.create(viewManagerModel,searchFormViewModel, recipeListViewModel);
         RecipeListView recipeListView = RecipeListUseCaseFactory.createRecipeView(viewManagerModel, recipeListViewModel,recipeDetailViewModel, commentDataAccessObject);
-        RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.createRecipeDetailView(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
+        //RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.createRecipeDetailView(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
         CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeDetailViewModel, commentViewModel, loggedInViewModel,  commentDataAccessObject);
         SignupView signupView = SignupUseCaseFactory.create(clearViewModel, viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
+        RecipeDetailView recipeDetailView = RecipeDetailUseCaseFactory.createRecipeDetailView(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject, saveRecipeController, loggedInViewModel);
+        //CommentView commentView = CommentUseCaseFactory.create(viewManagerModel, recipeDetailViewModel, commentViewModel, commentDataAccessObject);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel, signupView );
         views.add(loginView, loginView.viewName);
 
+
+        //views.add(exampleView, exampleView.viewName);
         LoggedInView loggedInView = LoggedInUseCaseFactory.createLoggedInView(viewManagerModel, loginViewModel, loggedInViewModel, searchFormViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
