@@ -115,7 +115,7 @@ public class SearchFormView extends JPanel implements PropertyChangeListener {
                         System.out.println(keywords);
                         String dietSubString = formatSelectedValuesList(dietSelection);
                         String healthSubString = formatSelectedValuesList(healthSelection);
-                        String mealTypeSubString = formatSelectedValuesList(mealTypeSelection);
+                        String mealTypeSubString = formatSelectedValuesList(mealTypeSelection).replaceAll("/", " ");
                         String dishSubString = formatSelectedValuesList(dishTypeSelection);
                         String cuisineSubString = formatSelectedValuesList(cuisineTypeSelection);
 
@@ -173,6 +173,7 @@ public class SearchFormView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
         SearchFormState state = searchFormViewModel.getState();
         System.out.println(state.isSearchResultEmpty());
+
         if (state.isSearchResultEmpty()) {
             JOptionPane.showMessageDialog(this, "No result found.");
         }
