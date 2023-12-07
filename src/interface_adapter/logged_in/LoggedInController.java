@@ -18,4 +18,5 @@ public class LoggedInController {
     public void goToSearch() {
         loggedInInteractor.goToSearch();
     }
+    public void goToSavedRecipes(){loggedInInteractor.goToSavedRecipes();}
 }

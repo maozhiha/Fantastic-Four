@@ -60,7 +60,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         });
 
         saved_recipes.addActionListener(actionEvent -> {
-
+            loggedInController.goToSavedRecipes();
         });
 
         logOut.addActionListener(this);
