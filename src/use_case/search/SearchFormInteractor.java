@@ -63,4 +63,10 @@ public class SearchFormInteractor implements SearchFormInputBoundary{
 //            //RecipesDisplayer.DisplayRecipes(data, index, arr_length, scanner);
         }
     }
+
+    @Override
+    public void goBackToLoggedInView() {
+        // TODO Auto-generated method stub
+        searchFormPresenter.goBackToLoggedInView();
+    }
 }

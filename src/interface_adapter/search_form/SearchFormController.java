@@ -100,5 +100,9 @@ public class SearchFormController {
 
         searchFormUseCaseInteractor.execute(searchFormInputData);
     }
+
+    public void goBackToLoggedInView() {
+        searchFormUseCaseInteractor.goBackToLoggedInView();
+    }
 }
 

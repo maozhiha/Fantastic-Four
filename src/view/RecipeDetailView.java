@@ -105,6 +105,8 @@ public class RecipeDetailView extends JPanel implements PropertyChangeListener {
         List<String> ingredientLines = recipe.getIngredientLines();
 
         StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Recipe Name: %s\n", recipe.getLabel()));
+        sb.append(String.format("Recipe URL: %s\n", recipe.getUri()));
         for (String ingredientLine : ingredientLines) {
             sb.append(ingredientLine);
             sb.append("\n");
