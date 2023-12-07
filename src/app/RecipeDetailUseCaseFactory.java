@@ -3,6 +3,7 @@ package app;
 import data_access.CommentFileDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.comment.CommentViewModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.recipe_detail.RecipeDetailController;
 import interface_adapter.recipe_detail.RecipeDetailPresenter;
 import interface_adapter.recipe_list.RecipeListViewModel;
@@ -17,10 +18,10 @@ public class RecipeDetailUseCaseFactory {
     private RecipeDetailUseCaseFactory() {
     }
 
-    public static RecipeDetailView createRecipeDetailView(ViewManagerModel viewManagerModel, RecipeListViewModel recipeListViewModel, interface_adapter.recipe_detail.RecipeDetailViewModel recipeDetailViewModel, CommentViewModel commentViewModel, CommentFileDataAccessObject commentFileDataAccessObject, SaveRecipeController saveRecipeController) {
+    public static RecipeDetailView createRecipeDetailView(ViewManagerModel viewManagerModel, RecipeListViewModel recipeListViewModel, interface_adapter.recipe_detail.RecipeDetailViewModel recipeDetailViewModel, CommentViewModel commentViewModel, CommentFileDataAccessObject commentFileDataAccessObject, SaveRecipeController saveRecipeController, LoggedInViewModel loggedInViewModel) {
         RecipeDetailController recipeDetailController = createRecipeDetailController(viewManagerModel, recipeListViewModel, recipeDetailViewModel, commentViewModel, commentFileDataAccessObject);
 
-        return new RecipeDetailView(recipeDetailController, recipeDetailViewModel, saveRecipeController);
+        return new RecipeDetailView(recipeDetailController, recipeDetailViewModel, saveRecipeController, loggedInViewModel);
     }
 
     private static RecipeDetailController createRecipeDetailController(ViewManagerModel viewManagerModel, RecipeListViewModel recipeListViewModel, interface_adapter.recipe_detail.RecipeDetailViewModel recipeDetailViewModel, CommentViewModel commentViewModel, CommentFileDataAccessObject commentFileDataAccessObject) {

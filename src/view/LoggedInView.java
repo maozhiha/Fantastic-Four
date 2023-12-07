@@ -26,6 +26,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     final JButton logOut;
 
     final JButton search;
+    final JButton saved_recipes;
 
     /**
      * A window with a title and a JButton.
@@ -46,6 +47,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(logOut);
         search = new JButton("Search Recipe");
         buttons.add(search);
+        saved_recipes = new JButton("View Saved Recipes");
+        buttons.add(saved_recipes);
 
 
         logOut.addActionListener(actionEvent -> {
@@ -54,6 +57,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         search.addActionListener(actionEvent -> {
             loggedInController.goToSearch();
+        });
+
+        saved_recipes.addActionListener(actionEvent -> {
+
         });
 
         logOut.addActionListener(this);
