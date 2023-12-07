@@ -11,6 +11,7 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.recipe_detail.RecipeDetailViewModel;
 import interface_adapter.recipe_list.RecipeListViewModel;
 import interface_adapter.save_recipe.SaveRecipeController;
+import interface_adapter.saved_recipes.SavedRecipesViewModel;
 import interface_adapter.search_form.SearchFormViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.weclome_user.WelcomeUserViewModel;
@@ -51,6 +52,7 @@ public class Main {
         RecipeListViewModel recipeListViewModel = new RecipeListViewModel();
         RecipeDetailViewModel recipeDetailViewModel = new RecipeDetailViewModel();
         CommentViewModel commentViewModel = new CommentViewModel();
+        SavedRecipesViewModel savedRecipesViewModel = new SavedRecipesViewModel();
 
         CommentFileDataAccessObject commentDataAccessObject;
         SaveRecipeFileDataAccessObject saveRecipeFileDataAccessObject;
@@ -92,8 +94,11 @@ public class Main {
 
 
         //views.add(exampleView, exampleView.viewName);
-        LoggedInView loggedInView = LoggedInUseCaseFactory.createLoggedInView(viewManagerModel, loginViewModel, loggedInViewModel, searchFormViewModel);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.createLoggedInView(viewManagerModel, loginViewModel, loggedInViewModel, searchFormViewModel, savedRecipesViewModel);
         views.add(loggedInView, loggedInView.viewName);
+
+        SavedRecipesView savedRecipesView = SavedRecipesUseCaseFactory.create(viewManagerModel, loggedInViewModel, savedRecipesViewModel, saveRecipeFileDataAccessObject);
+        views.add(savedRecipesView, savedRecipesView.viewName);
 
 
         viewManagerModel.setActiveView(loginView.viewName);
