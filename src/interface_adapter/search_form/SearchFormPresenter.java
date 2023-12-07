@@ -1,10 +1,10 @@
 package interface_adapter.search_form;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.recipe_list.RecipeListViewModel;
 import use_case.search.SearchFormOutputBoundary;
 import use_case.search.SearchFormOutputData;
-import interface_adapter.logged_in.LoggedInViewModel;
 
 public class SearchFormPresenter implements SearchFormOutputBoundary {
 
@@ -15,6 +15,7 @@ public class SearchFormPresenter implements SearchFormOutputBoundary {
     private final SearchFormViewModel searchFormViewModel;
 
     private final RecipeListViewModel recipeListViewModel;
+
     private final LoggedInViewModel loggedInViewModel;
 
 
@@ -30,6 +31,7 @@ public class SearchFormPresenter implements SearchFormOutputBoundary {
         SearchFormState searchFormState = searchFormViewModel.getState();
         searchFormState.setSearchResult(result.getData());
         searchFormState.setArr_length(result.getArr_length());
+        searchFormState.setSearchResultEmpty(false);
 
         System.out.println("Got result from SearchFormInteractor");
 //        System.out.println(result.getData().toString());
@@ -44,7 +46,14 @@ public class SearchFormPresenter implements SearchFormOutputBoundary {
     @Override
     public void prepareErrorView(String errorMessage) {
         System.out.println("No result from SearchFormInteractor");
+        SearchFormState searchFormState = searchFormViewModel.getState();
+        searchFormState.setSearchResultEmpty(true);
+
+        searchFormViewModel.setState(searchFormState);
+        searchFormViewModel.firePropertyChanged();
     }
+
+    @Override
     public void goBackToLoggedInView() {
         viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

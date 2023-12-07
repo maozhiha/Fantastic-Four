@@ -17,7 +17,7 @@ public class SearchFormUseCaseFactory {
     }
 
     public static SearchFormView create(ViewManagerModel viewManagerModel,SearchFormViewModel searchFormViewModel, RecipeListViewModel recipeListViewModel, LoggedInViewModel loggedInViewModel) {
-        SearchFormController searchFormController = createSearchFormController(viewManagerModel, searchFormViewModel, recipeListViewModel,loggedInViewModel);
+        SearchFormController searchFormController = createSearchFormController(viewManagerModel, searchFormViewModel, recipeListViewModel, loggedInViewModel);
 
         return new SearchFormView(searchFormViewModel, searchFormController);
     }

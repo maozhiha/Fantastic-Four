@@ -32,7 +32,7 @@ public class SaveRecipeFileDataAccessObject {
                     String[] col = row.split(",");
                     String username = String.valueOf(col[headers.get("username")]);
                     String recipeId = String.valueOf(col[headers.get("recipeId")]);
-                    userRecipeMap.computeIfAbsent(username, k->new ArrayList<>());
+                    userRecipeMap.computeIfAbsent(username, k -> new ArrayList<>()).add(recipeId);
                 }
             } catch (IOException e){
                 throw new RuntimeException("Error loading saved recipes");
@@ -70,7 +70,7 @@ public class SaveRecipeFileDataAccessObject {
     }
 
     public void saveRecipeForUser(String username, String recipeId) {
-        userRecipeMap.computeIfAbsent(username, k->new ArrayList<>()).add(recipeId);
+        userRecipeMap.computeIfAbsent(username, k -> new ArrayList<>()).add(recipeId);
         save(); // Save the updated map to the file
     }
 }

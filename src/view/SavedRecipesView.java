@@ -42,16 +42,32 @@ public class SavedRecipesView extends JPanel implements PropertyChangeListener {
         recipesPane.setEditable(false);
         JScrollPane recipesScrollablePane = new JScrollPane(recipesPane);
         this.add(recipesScrollablePane, BorderLayout.CENTER);
+        JPanel buttons = new JPanel();
         JButton backButton = new JButton("Back");
-        this.add(backButton, BorderLayout.SOUTH);
+        //this.add(backButton, BorderLayout.SOUTH);
+        JButton recipesButton = new JButton("View Saved Recipes");
 
-        LoggedInState loggedInState = loggedInViewModel.getState();
-        String username = loggedInState.getUsername();
-        savedRecipesController.displayRecipes(username);
+        //this.add(recipesButton, BorderLayout.BEFORE_FIRST_LINE);
+        buttons.add(recipesButton);
+
+        buttons.add(backButton);
+        this.add(buttons, BorderLayout.SOUTH);
+        recipesButton.addActionListener(
+                actionEvent -> {
+                    LoggedInState loggedInState = loggedInViewModel.getState();
+                    String username = loggedInState.getUsername();
+                    savedRecipesController.displayRecipes(username);
+                }
+        );
+        //LoggedInState loggedInState = loggedInViewModel.getState();
+        //String username = loggedInState.getUsername();
+        //savedRecipesController.displayRecipes(username);
 
         backButton.addActionListener(
                 actionEvent -> {
+                    recipesPane.setText("");
                     savedRecipesController.goBackToLoggedIn();
+
                 }
         );
 
@@ -61,8 +77,11 @@ public class SavedRecipesView extends JPanel implements PropertyChangeListener {
         SavedRecipesState state = (SavedRecipesState) propertyChangeEvent.getNewValue();
         List<IdCurrRecipeCls> recipes = state.getRecipes();
         StringBuilder totalSb = new StringBuilder();
+        StringBuilder testSb = new StringBuilder();
 
         for (IdCurrRecipeCls recipe: recipes){
+            testSb.append(recipe.getcurrRecipeUrl());
+
             List<String> ingredientLines = jsonArrayToList(recipe.getingredientsLine());
             String uri = recipe.getcurrRecipeUrl();
             StringBuilder sb = new StringBuilder();
@@ -78,6 +97,8 @@ public class SavedRecipesView extends JPanel implements PropertyChangeListener {
             String recipeItem = sb.toString();
             totalSb.append(recipeItem);
         }
+        //recipesPane.setText(testSb.toString());
+        //recipesPane.setText("HELLO");
         recipesPane.setText(totalSb.toString());
     }
 

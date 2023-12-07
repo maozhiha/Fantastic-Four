@@ -44,11 +44,11 @@ public class SearchFormViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        return;
+        support.firePropertyChange("state", null, this.state);
     }
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-        return;
+        support.addPropertyChangeListener(listener);
     }
 }

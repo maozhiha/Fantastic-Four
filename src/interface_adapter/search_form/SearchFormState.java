@@ -15,6 +15,16 @@ public class SearchFormState {
 
     private int arr_length;
 
+    private boolean isSearchResultEmpty;
+
+    public boolean isSearchResultEmpty() {
+        return isSearchResultEmpty;
+    }
+
+    public void setSearchResultEmpty(boolean searchResultEmpty) {
+        isSearchResultEmpty = searchResultEmpty;
+    }
+
     public JSONObject getSearchResult() {
         return searchResult;
     }

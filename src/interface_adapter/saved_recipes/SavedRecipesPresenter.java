@@ -24,9 +24,10 @@ public class SavedRecipesPresenter implements SavedRecipesOutputBoundary {
     }
 
     public void goToSavedRecipes(List<IdCurrRecipeCls> recipes){
-
-        viewManagerModel.setActiveView(savedRecipesViewModel.viewName);
-        viewManagerModel.firePropertyChanged();
+        SavedRecipesState state = savedRecipesViewModel.getState();
+        state.setRecipes(recipes);
+        savedRecipesViewModel.setState(state);
+        savedRecipesViewModel.firePropertyChanged();
 
     }
 }

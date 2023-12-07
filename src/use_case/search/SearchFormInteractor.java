@@ -64,6 +64,7 @@ public class SearchFormInteractor implements SearchFormInputBoundary{
         }
     }
 
+    @Override
     public void goBackToLoggedInView() {
         // TODO Auto-generated method stub
         searchFormPresenter.goBackToLoggedInView();
