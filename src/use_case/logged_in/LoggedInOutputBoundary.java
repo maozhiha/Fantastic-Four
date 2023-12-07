@@ -4,4 +4,6 @@ public interface LoggedInOutputBoundary {
     void logOut();
 
     void goToSearch();
+
+    void goToSavedRecipes();
 }
